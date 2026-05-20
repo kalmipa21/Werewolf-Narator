@@ -2,43 +2,28 @@
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no"
-    />
-    <title>Werewolf Narator - Ultimate Edition (Fixed)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Werewolf Narator - Ultimate Edition</title>
     <style>
       * {
         box-sizing: border-box;
       }
-
       body {
-        font-family: "Segoe UI", "Poppins", "Inter", system-ui, -apple-system,
-          sans-serif;
+        font-family: "Segoe UI", system-ui, sans-serif;
         background: linear-gradient(145deg, #1a2a3a 0%, #0e1a24 100%);
         min-height: 100vh;
         margin: 0;
         padding: 20px;
-        color: #f0ede8;
+        color: white;
       }
-
-      .app-container {
-        max-width: 1600px;
+      .container {
+        max-width: 1400px;
         margin: 0 auto;
       }
-
-      .header {
+      h1 {
         text-align: center;
         margin-bottom: 25px;
-      }
-
-      .header h1 {
-        font-size: 2.2rem;
-        background: linear-gradient(135deg, #ffcd7e, #e69500);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        margin: 0;
+        color: #ffcd7e;
       }
 
       .tab-nav {
@@ -47,29 +32,32 @@
         margin-bottom: 20px;
         flex-wrap: wrap;
       }
-
       .tab-btn {
         background: #2a3a3a;
         padding: 10px 24px;
         border-radius: 40px;
         cursor: pointer;
-        transition: 0.2s;
+        transition: all 0.3s ease;
       }
-
       .tab-btn.active {
         background: #b86f2c;
-        box-shadow: 0 0 10px #ffb347;
       }
-
-      .tab-content {
+      .tab-btn.disabled-log {
+        opacity: 0.5;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+      .tab-panel {
         display: none;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 30px;
+        padding: 20px;
       }
-
-      .tab-content.active {
+      .tab-panel.active {
         display: block;
       }
 
-      .sub-tab-nav {
+      .sub-nav {
         display: flex;
         gap: 8px;
         margin-bottom: 15px;
@@ -77,167 +65,41 @@
         border-bottom: 1px solid #b97f44;
         padding-bottom: 10px;
       }
-
-      .sub-tab-btn {
+      .sub-btn {
         background: #1a2a2a;
         padding: 6px 16px;
         border-radius: 30px;
         cursor: pointer;
-        font-size: 0.9rem;
       }
-
-      .sub-tab-btn.active {
+      .sub-btn.active {
         background: #2d6a4f;
       }
-
-      .sub-tab-content {
+      .sub-panel {
         display: none;
       }
-
-      .sub-tab-content.active {
+      .sub-panel.active {
         display: block;
-      }
-
-      .setup-panel {
-        background: rgba(0, 0, 0, 0.55);
-        border-radius: 48px;
-        padding: 18px 25px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-        margin-bottom: 30px;
-      }
-
-      .player-count-area {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        background: #0f1a21;
-        padding: 8px 18px;
-        border-radius: 60px;
-      }
-
-      #jumlahPemain {
-        width: 80px;
-        padding: 8px 12px;
-        font-size: 1.2rem;
-        text-align: center;
-        border-radius: 40px;
-        border: none;
-        background: #2c3e2f;
-        color: white;
-        font-weight: bold;
       }
 
       button {
         background: #7a2e2e;
         border: none;
-        padding: 10px 24px;
+        padding: 10px 20px;
         border-radius: 40px;
         font-weight: bold;
-        font-size: 1rem;
         cursor: pointer;
-        transition: 0.2s;
         color: white;
+        margin: 5px;
       }
-
       button.primary {
         background: #b86f2c;
-      }
-      button.primary:hover {
-        background: #d98d3a;
-        transform: scale(1.02);
-      }
-      button.danger {
-        background: #4d1a1a;
-      }
-      button.danger:hover {
-        background: #782b2b;
       }
       button.success {
         background: #2d6a4f;
       }
-      button.success:hover {
-        background: #409c73;
+      button.danger {
+        background: #8b0000;
       }
-      button.warning {
-        background: #2c5a6e;
-      }
-
-      .roulette-container {
-        background: linear-gradient(135deg, #0f1a1f, #061016);
-        border-radius: 60px;
-        padding: 30px;
-        text-align: center;
-        margin-bottom: 30px;
-        border: 2px solid #ffb347;
-      }
-
-      #rouletteCard {
-        background: #1f2c1b;
-        border-radius: 30px;
-        padding: 40px;
-        font-size: 3rem;
-        margin: 20px 0;
-        min-height: 180px;
-      }
-
-      .role-big {
-        font-size: 4rem;
-        margin-bottom: 10px;
-      }
-
-      .assigned-roles-section {
-        background: #0e181fcc;
-        border-radius: 36px;
-        padding: 20px;
-        margin-top: 20px;
-      }
-
-      .role-assigned-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        gap: 10px;
-        max-height: 500px;
-        overflow-y: auto;
-      }
-
-      .assigned-card {
-        background: #1f2b2e;
-        border-radius: 20px;
-        padding: 10px 15px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-left: 5px solid #c99436;
-        flex-wrap: wrap;
-      }
-
-      .status-dead {
-        opacity: 0.5;
-        text-decoration: line-through;
-        background: #3a1a1a;
-      }
-
-      .night-panel,
-      .voting-panel,
-      .blind-panel,
-      .dead-panel {
-        background: #030b0fcc;
-        border-radius: 36px;
-        padding: 20px;
-        margin-top: 20px;
-      }
-
-      .action-group {
-        background: #0f1a1f;
-        border-radius: 28px;
-        padding: 15px;
-        margin: 15px 0;
-      }
-
       select,
       input {
         background: #1e2a2f;
@@ -245,158 +107,136 @@
         padding: 8px 14px;
         border-radius: 40px;
         border: 1px solid #b97f44;
-      }
-
-      .log-panel {
-        background: #0a1015cc;
-        border-radius: 36px;
-        padding: 20px;
-        height: 500px;
-        overflow-y: auto;
-        font-family: monospace;
-      }
-
-      .log-entry {
-        padding: 8px;
-        border-bottom: 1px solid #2a3a3a;
-        font-size: 0.85rem;
-      }
-
-      .log-night {
-        color: #ffaa66;
-      }
-      .log-death {
-        color: #ff6666;
-      }
-      .log-info {
-        color: #66ffaa;
-      }
-      .log-warning {
-        color: #ffaa66;
-      }
-
-      .result-area {
-        background: #000000aa;
-        border-radius: 20px;
-        padding: 15px;
-        margin-top: 15px;
-        text-align: center;
-      }
-
-      .victory-area {
-        background: #2d6a4faa;
-        border-radius: 30px;
-        padding: 20px;
-        text-align: center;
-        margin-top: 20px;
-        font-size: 1.2rem;
-      }
-
-      .role-stats {
-        display: flex;
-        gap: 15px;
-        flex-wrap: wrap;
-        margin-bottom: 15px;
-        padding: 10px;
-        background: #00000055;
-        border-radius: 30px;
-      }
-
-      .stat-item {
-        padding: 5px 15px;
-        border-radius: 30px;
-        background: #1a2a2a;
-      }
-
-      .stat-item span {
-        font-weight: bold;
-        color: #ffcd7e;
-      }
-
-      .info-box {
-        background: #1a2a3a;
-        border-left: 4px solid #ffcd7e;
-        padding: 10px 15px;
-        margin: 10px 0;
-        border-radius: 10px;
-        font-size: 0.85rem;
-      }
-
-      .role-list-container {
-        background: #0a1015cc;
-        border-radius: 36px;
-        padding: 20px;
-        margin: 20px 0;
-      }
-
-      .role-tag {
-        display: inline-block;
-        background: #2d6a4f;
-        padding: 8px 16px;
-        border-radius: 30px;
         margin: 5px;
-        font-size: 0.9rem;
       }
 
-      .role-card-compact {
-        background: #1f2b2e;
-        border-radius: 16px;
-        padding: 12px;
-        margin: 8px 0;
-        border-left: 4px solid #c99436;
-      }
-
-      .dead-list {
+      .role-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 10px;
+        max-height: 400px;
+        overflow-y: auto;
       }
-
+      .role-card {
+        background: #1f2b2e;
+        border-radius: 20px;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-left: 5px solid #c99436;
+      }
+      .dead-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        max-height: 400px;
+        overflow-y: auto;
+      }
       .dead-card {
         background: #3a1a1a;
         border-radius: 20px;
+        padding: 10px 15px;
+        display: flex;
+        justify-content: space-between;
+      }
+      .dead-card.new {
+        background: #6b2a2a;
+        border-left: 4px solid #ff6666;
+      }
+      .info-box {
+        background: #1a2a3a;
+        border-left: 4px solid #ffcd7e;
         padding: 10px;
-        text-align: center;
-        opacity: 0.7;
-      }
-
-      .balance-info {
-        background: #2d6a4f;
-        border-radius: 20px;
-        padding: 8px 15px;
-        margin-left: 15px;
-        font-size: 0.8rem;
-      }
-
-      .lover-selection {
-        background: #2d1a4f;
-        border-radius: 20px;
-        padding: 15px;
         margin: 10px 0;
+        border-radius: 10px;
+      }
+      .action-status {
+        background: #1a2a3a;
+        border-radius: 20px;
+        padding: 10px;
+        margin-top: 10px;
+        color: #ffcd7e;
+      }
+      .role-tag {
+        display: inline-block;
+        background: #2d6a4f;
+        padding: 5px 12px;
+        border-radius: 30px;
+        margin: 5px;
       }
 
-      @media (max-width: 700px) {
-        .roulette-container {
-          padding: 15px;
+      .victory-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: fadeIn 0.3s ease;
+      }
+      .victory-card {
+        background: linear-gradient(145deg, #2a1a2a, #1a0a1a);
+        border-radius: 60px;
+        padding: 40px;
+        text-align: center;
+        border: 3px solid gold;
+        max-width: 500px;
+        width: 90%;
+        animation: bounceIn 0.5s ease;
+      }
+      .victory-emoji {
+        font-size: 5rem;
+        margin-bottom: 20px;
+      }
+      .victory-title {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+      .victory-reason {
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 30px;
+        padding: 15px;
+        margin: 20px 0;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
         }
-        #rouletteCard {
-          font-size: 1.5rem;
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes bounceIn {
+        0% {
+          transform: scale(0.3);
+          opacity: 0;
+        }
+        80% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
         }
       }
     </style>
   </head>
   <body>
-    <div class="app-container">
-      <div class="header">
-        <h1>🐺 WEREWOLF NARATOR - ULTIMATE EDITION 🧙</h1>
-      </div>
+    <div class="container">
+      <h1>🐺 WEREWOLF NARATOR 🧙</h1>
 
-      <div class="tab-nav">
+      <div class="tab-nav" id="mainTabs">
         <div class="tab-btn active" data-tab="setup">🎮 Setup Game</div>
         <div
           class="tab-btn"
           data-tab="narator"
-          id="tabNaratorBtn"
+          id="btnNarator"
           style="display: none"
         >
           📋 Narator
@@ -404,466 +244,683 @@
         <div
           class="tab-btn"
           data-tab="night"
-          id="tabNightBtn"
+          id="btnNight"
           style="display: none"
         >
           🌙 Malam Hari
         </div>
-        <div
-          class="tab-btn"
-          data-tab="voting"
-          id="tabVotingBtn"
-          style="display: none"
-        >
-          🗳️ Voting Siang
-        </div>
-        <div
-          class="tab-btn"
-          data-tab="dead"
-          id="tabDeadBtn"
-          style="display: none"
-        >
+        <div class="tab-btn" data-tab="dead" id="btnDead" style="display: none">
           💀 Korban Mati
         </div>
         <div
           class="tab-btn"
-          data-tab="blind"
-          id="tabBlindBtn"
+          data-tab="voting"
+          id="btnVotingTab"
           style="display: none"
         >
-          👁️ Player Blind
+          🗳️ Voting Siang
         </div>
-        <div class="tab-btn" data-tab="log">📜 Log & Riwayat</div>
+        <div class="tab-btn" data-tab="log" id="logTabBtn">
+          📜 Log & Riwayat
+        </div>
       </div>
 
-      <!-- Tab Setup -->
-      <div class="tab-content active" id="tab-setup">
-        <div class="setup-panel">
-          <div class="player-count-area">
-            <label>👥 Jumlah Pemain:</label>
-            <input
-              type="number"
-              id="jumlahPemain"
-              min="5"
-              max="20"
-              value="10"
-              step="1"
-            />
-          </div>
-          <button id="btnStartGame" class="primary">
-            🎮 Generate Role & Mulai Game
-          </button>
-          <button id="btnResetFull" class="danger">🔄 Reset Total</button>
-          <div class="balance-info">⚖️ Rasio Werewolf:Role Lain = 1:4</div>
-        </div>
-
+      <div id="panel-setup" class="tab-panel active">
         <div
-          id="roleListDisplay"
-          class="role-list-container"
-          style="display: none"
+          style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap"
         >
-          <h3>📋 Daftar Role yang Akan Dimainkan</h3>
-          <div id="roleListContent" class="role-stats"></div>
-          <div id="roleDescriptions" style="margin-top: 15px"></div>
-          <button
-            id="btnStartRoulette"
-            class="success"
-            style="margin-top: 15px"
+          <label>👥 Jumlah Pemain:</label>
+          <input type="number" id="jumlahPemain" min="5" max="20" value="10" />
+          <button id="btnGenerate" class="primary">🎮 Generate Role</button>
+          <button id="btnReset" class="danger">🔄 Reset</button>
+        </div>
+        <div id="roleListPanel" style="display: none; margin-top: 20px">
+          <h3>Daftar Role yang Akan Dimainkan</h3>
+          <div id="roleList"></div>
+          <button id="btnMulaiRoulette" class="success">
+            🎰 Mulai Roulette
+          </button>
+        </div>
+        <div
+          id="roulettePanel"
+          style="display: none; margin-top: 20px; text-align: center"
+        >
+          <div
+            id="rouletteCard"
+            style="
+              background: #1f2c1b;
+              border-radius: 30px;
+              padding: 40px;
+              margin: 20px 0;
+            "
           >
-            🎰 Mulai Roulette & Assign Pemain
-          </button>
-        </div>
-
-        <div
-          class="roulette-container"
-          id="rouletteContainer"
-          style="display: none"
-        >
-          <h2>🎰 AMBIL ROLE ANDA 🎰</h2>
-          <div id="rouletteCard">
-            <div class="role-big">🎴</div>
+            <div style="font-size: 4rem">🎴</div>
             <div>Klik spin untuk mengambil role</div>
           </div>
-          <button id="btnSpinRoulette" class="primary">
-            ✨ SPIN ROULETTE ✨
-          </button>
-          <div id="playerInputArea" style="display: none; margin-top: 20px">
-            <input
-              type="text"
-              id="playerNameInput"
-              placeholder="Nama pemain..."
-              style="padding: 10px; border-radius: 40px; width: 250px"
-            />
-            <button id="btnConfirmRole" class="success">
-              ✅ Konfirmasi Role
-            </button>
+          <button id="btnSpin" class="primary">✨ SPIN ROULETTE ✨</button>
+          <div id="inputNamaArea" style="display: none; margin-top: 20px">
+            <input type="text" id="namaPemain" placeholder="Nama pemain..." />
+            <button id="btnKonfirmasi" class="success">✅ Konfirmasi</button>
           </div>
-          <div id="rouletteProgress" style="margin-top: 10px"></div>
+          <div id="progressSpin"></div>
         </div>
       </div>
 
-      <!-- Tab Narator -->
-      <div class="tab-content" id="tab-narator">
-        <div class="assigned-roles-section">
-          <h3>📋 DAFTAR SEMUA PEMAIN & ROLE (Hanya Narator)</h3>
-          <div class="role-stats" id="playersStats"></div>
-          <div id="playersList" class="role-assigned-grid"></div>
-
-          <!-- Cupid Lovers Selection -->
-          <div
-            id="cupidSection"
-            class="lover-selection"
-            style="display: none; margin-top: 20px"
-          >
-            <h4>❤️ Cupid - Pilih Pasangan Kekasih</h4>
-            <p>Cupid harus memilih satu orang untuk menjadi kekasihnya!</p>
-            <select id="cupidTargetSelect">
-              <option value="">-- Pilih Pasangan --</option>
-            </select>
-            <button id="btnSetLovers" class="success">
-              ❤️ Tetapkan Sebagai Kekasih
-            </button>
-            <div id="loversStatus" style="margin-top: 10px"></div>
-          </div>
+      <div id="panel-narator" class="tab-panel">
+        <h3>Daftar Pemain & Role (Hanya Narator)</h3>
+        <div id="playersList"></div>
+        <div
+          id="cupidArea"
+          style="
+            display: none;
+            margin-top: 20px;
+            background: #2d1a4f;
+            border-radius: 20px;
+            padding: 15px;
+          "
+        >
+          <h4>❤️ Cupid - Pilih Pasangan</h4>
+          <select id="cupidPilih"></select>
+          <button id="btnCupidSet" class="success">❤️ Tetapkan</button>
+          <div id="cupidStatus"></div>
         </div>
       </div>
 
-      <!-- Tab Malam Hari (sama seperti sebelumnya) -->
-      <div class="tab-content" id="tab-night">
-        <div class="night-panel">
-          <h3>🌙 MALAM HARI</h3>
-          <div class="sub-tab-nav">
-            <div class="sub-tab-btn active" data-subtab="werewolf">
-              🐺 Werewolf
-            </div>
-            <div class="sub-tab-btn" data-subtab="guardian">🛡️ Guardian</div>
-            <div class="sub-tab-btn" data-subtab="witch">🧪 Witch</div>
-            <div class="sub-tab-btn" data-subtab="execute">⚡ Eksekusi</div>
-          </div>
-          <div class="sub-tab-content active" id="subtab-werewolf">
-            <div class="action-group">
-              <h4>🐺 Werewolf</h4>
-              <select id="werewolfTargetSelect">
-                <option value="">-- Pilih Target --</option></select
-              ><button id="btnSetWerewolfTarget" class="danger">
-                🐺 Tetapkan Target Bunuh
-              </button>
-              <div id="werewolfTargetStatus" style="margin-top: 10px"></div>
-            </div>
-          </div>
-          <div class="sub-tab-content" id="subtab-guardian">
-            <div class="action-group" id="guardianActionGroup">
-              <h4>🛡️ Guardian</h4>
-              <select id="guardianTargetSelect">
-                <option value="">-- Pilih Target --</option></select
-              ><button id="btnSetProtection" class="success">
-                🛡️ Tetapkan Perlindungan
-              </button>
-              <div id="protectionStatus" style="margin-top: 10px"></div>
-            </div>
-          </div>
-          <div class="sub-tab-content" id="subtab-witch">
-            <div class="action-group" id="witchActionGroup">
-              <h4>🧪 Witch</h4>
-              <div id="witchStatus"></div>
-              <select id="witchHealSelect">
-                <option value="">-- Heal --</option></select
-              ><button id="btnWitchHeal" class="success">💊 Heal</button
-              ><select id="witchPoisonSelect">
-                <option value="">-- Poison --</option></select
-              ><button id="btnWitchPoison" class="danger">☠️ Poison</button>
-              <div id="witchActionStatus"></div>
-            </div>
-          </div>
-          <div class="sub-tab-content" id="subtab-execute">
-            <div class="action-group">
-              <button
-                id="btnExecuteNight"
-                class="primary"
-                style="background: #8b0000"
-              >
-                🔪 EKSEKUSI MALAM</button
-              ><button id="btnResetDeath" style="background: #2e3b2e">
-                ♻️ Reset Mati
-              </button>
-            </div>
-          </div>
+      <div id="panel-night" class="tab-panel">
+        <div class="sub-nav" id="subNav">
+          <div class="sub-btn active" data-sub="werewolf">🐺 Werewolf</div>
           <div
-            id="victoryDisplay"
-            class="victory-area"
+            class="sub-btn"
+            data-sub="guardian"
+            id="subGuardian"
             style="display: none"
+          >
+            🛡️ Guardian
+          </div>
+          <div
+            class="sub-btn"
+            data-sub="witch"
+            id="subWitch"
+            style="display: none"
+          >
+            🧪 Witch
+          </div>
+          <div
+            class="sub-btn"
+            data-sub="warrior"
+            id="subWarrior"
+            style="display: none"
+          >
+            ⚔️ Warrior
+          </div>
+          <div
+            class="sub-btn"
+            data-sub="seer"
+            id="subSeer"
+            style="display: none"
+          >
+            🔮 Seer
+          </div>
+          <div
+            class="sub-btn"
+            data-sub="sorcerer"
+            id="subSorcerer"
+            style="display: none"
+          >
+            🧙 Sorcerer
+          </div>
+          <div class="sub-btn" data-sub="execute">⚡ Eksekusi</div>
+        </div>
+
+        <div id="sub-werewolf" class="sub-panel active">
+          <select id="targetWerewolf">
+            <option value="">-- Pilih Target --</option>
+          </select>
+          <button id="btnSetWerewolf" class="danger">🐺 Tetapkan Target</button>
+          <div id="statusWerewolf" class="action-status"></div>
+        </div>
+        <div id="sub-guardian" class="sub-panel">
+          <select id="targetGuardian">
+            <option value="">-- Pilih Target --</option>
+          </select>
+          <button id="btnSetGuardian" class="success">🛡️ Lindungi</button>
+          <div id="statusGuardian" class="action-status"></div>
+        </div>
+        <div id="sub-witch" class="sub-panel">
+          <div id="witchInfo" class="info-box"></div>
+          <select id="targetHeal">
+            <option value="">-- Heal --</option>
+          </select>
+          <button id="btnHeal" class="success">💊 Heal</button>
+          <select id="targetPoison">
+            <option value="">-- Poison --</option>
+          </select>
+          <button id="btnPoison" class="danger">☠️ Poison</button>
+          <div id="statusWitch" class="action-status"></div>
+        </div>
+        <div id="sub-warrior" class="sub-panel">
+          <div class="info-box">
+            ⚔️ Warrior bisa tebas di MALAM HARI. Jika target BUKAN Werewolf,
+            Warrior ikut mati!
+          </div>
+          <select id="targetWarrior">
+            <option value="">-- Pilih Target --</option>
+          </select>
+          <button id="btnWarriorTebas" class="danger">
+            ⚔️ Tebas Malam Ini
+          </button>
+          <div id="statusWarrior" class="action-status"></div>
+        </div>
+        <div id="sub-seer" class="sub-panel">
+          <select id="targetSeer">
+            <option value="">-- Pilih Target --</option>
+          </select>
+          <button id="btnSeerCek" class="primary">🔍 Cek Werewolf?</button>
+          <div
+            id="hasilSeer"
+            style="
+              display: none;
+              background: #000;
+              padding: 15px;
+              border-radius: 20px;
+              margin-top: 10px;
+            "
           ></div>
         </div>
-      </div>
-
-      <!-- Tab Voting Siang -->
-      <div class="tab-content" id="tab-voting">
-        <div class="voting-panel">
-          <h3>🗳️ VOTING SIANG HARI</h3>
-          <div class="action-group" id="warriorActionGroup">
-            <h4>⚔️ Warrior</h4>
-            <div id="warriorStatus"></div>
-            <select id="warriorTargetSelect">
-              <option value="">-- Pilih Target --</option></select
-            ><button id="btnWarriorKill" class="danger">⚔️ Tebas!</button>
-          </div>
-          <div class="action-group">
-            <h4>🗳️ VOTING</h4>
-            <select id="votingTargetSelect">
-              <option value="">-- Pilih Target --</option></select
-            ><button id="btnExecuteVoting" class="primary">
-              🔨 EKSEKUSI VOTING
-            </button>
-          </div>
+        <div id="sub-sorcerer" class="sub-panel">
+          <select id="targetSorcerer">
+            <option value="">-- Pilih Target --</option>
+          </select>
+          <button id="btnSorcererCek" class="primary">🔍 Cek Seer?</button>
+          <div
+            id="hasilSorcerer"
+            style="
+              display: none;
+              background: #000;
+              padding: 15px;
+              border-radius: 20px;
+              margin-top: 10px;
+            "
+          ></div>
+        </div>
+        <div id="sub-execute" class="sub-panel">
+          <button
+            id="btnEksekusiMalam"
+            class="danger"
+            style="background: #8b0000"
+          >
+            🔪 EKSEKUSI MALAM
+          </button>
+          <button id="btnResetMati">♻️ Reset Mati</button>
         </div>
       </div>
 
-      <!-- Tab Korban Mati -->
-      <div class="tab-content" id="tab-dead">
-        <div class="dead-panel">
-          <h3>💀 KORBAN MATI</h3>
-          <div id="deadList" class="dead-list"></div>
-        </div>
+      <div id="panel-dead" class="tab-panel">
+        <div id="deadList"></div>
       </div>
 
-      <!-- Tab Player Blind -->
-      <div class="tab-content" id="tab-blind">
-        <div class="blind-panel">
-          <h3>👁️ MODE BLIND</h3>
-          <div class="action-group" id="seerActionGroup">
-            <h4>🔮 Seer</h4>
-            <select id="seerTargetSelect">
-              <option value="">-- Pilih Target --</option></select
-            ><button id="btnSeerCheck" class="primary">🔍 Cek Werewolf?</button>
-            <div
-              id="seerResult"
-              class="result-area"
-              style="display: none"
-            ></div>
-          </div>
-          <div class="action-group" id="sorcererActionGroup">
-            <h4>🧙 Sorcerer</h4>
-            <select id="sorcererTargetSelect">
-              <option value="">-- Pilih Target --</option></select
-            ><button id="btnSorcererCheck" class="primary">🔍 Cek Seer?</button>
-            <div
-              id="sorcererResult"
-              class="result-area"
-              style="display: none"
-            ></div>
-          </div>
-          <div class="action-group" id="hunterActionGroup">
-            <h4>🔫 Hunter</h4>
-            <div id="hunterStatus"></div>
-            <select id="hunterTargetSelect">
-              <option value="">-- Pilih Target --</option></select
-            ><button id="btnHunterShoot" class="danger">🔫 Tembak!</button>
-          </div>
-        </div>
+      <div id="panel-voting" class="tab-panel">
+        <h4>🗳️ VOTING ELIMINASI DESA</h4>
+        <select id="targetVoting">
+          <option value="">-- Pilih Target --</option>
+        </select>
+        <button id="btnVotingExecute" class="primary">
+          🔨 EKSEKUSI VOTING
+        </button>
+        <div id="votingStatus" class="action-status"></div>
       </div>
 
-      <!-- Tab Log -->
-      <div class="tab-content" id="tab-log">
-        <div class="log-panel" id="logContainer"></div>
-        <button id="btnClearLog" class="warning">🗑️ Clear Log</button>
+      <div id="panel-log" class="tab-panel">
+        <div
+          id="logList"
+          style="
+            background: #0a1015;
+            border-radius: 20px;
+            padding: 20px;
+            height: 400px;
+            overflow-y: auto;
+          "
+        ></div>
+        <button id="btnClearLog">🗑️ Clear Log</button>
       </div>
     </div>
 
     <script>
-      const ROLE_DATABASE = {
-        Werewolf: {
-          team: "🐺 Serigala",
-          desc: "Membunuh 1 orang tiap malam",
-          ability: "Membunuh",
-        },
-        Villager: {
-          team: "🏘️ Desa",
-          desc: "Tidak punya kemampuan khusus",
-          ability: "Hak suara",
-        },
-        Sorcerer: {
-          team: "🐺 Serigala",
-          desc: "Bisa menebak siapa Seer",
-          ability: "Menebak Seer",
-        },
-        Seer: {
-          team: "🏘️ Desa",
-          desc: "Bisa mengecek apakah seseorang Werewolf",
-          ability: "Mengecek Werewolf",
-        },
-        "The Fool": {
-          team: "🎭 Netral",
-          desc: "Menang jika dieliminasi voting",
-          ability: "Menang jika divoting",
-        },
-        "Lovers (Cupid)": {
-          team: "🏘️ Desa",
-          desc: "Memilih satu pasangan kekasih",
-          ability: "Memilih kekasih",
-        },
-        Hunter: {
-          team: "🏘️ Desa",
-          desc: "Saat mati bisa membunuh 1 orang",
-          ability: "Balas dendam",
-        },
-        Strongman: {
-          team: "🏘️ Desa",
-          desc: "Butuh 2x serangan untuk mati",
-          ability: "Tahan 2 serangan",
-        },
-        Mayor: {
-          team: "🏘️ Desa",
-          desc: "Suara dihitung 2x saat voting",
-          ability: "Suara 2x",
-        },
-        Guardian: {
-          team: "🏘️ Desa",
-          desc: "Bisa melindungi 1 orang tiap malam",
-          ability: "Melindungi",
-        },
-        Witch: {
-          team: "🏘️ Desa",
-          desc: "Punya ramuan heal dan poison",
-          ability: "Heal & Poison",
-        },
-        Warrior: {
-          team: "🏘️ Desa",
-          desc: "Bisa tebas 1 orang siang hari",
-          ability: "Tebasan",
-        },
-        "Cursed Villager": {
-          team: "🏘️ Desa",
-          desc: "Jika dibunuh Werewolf, 1 Werewolf ikut mati",
-          ability: "Kutukan",
-        },
-        Lycan: {
-          team: "🏘️ Desa",
-          desc: "Terlihat Werewolf oleh Seer",
-          ability: "Menipu Seer",
-        },
-      };
-
-      let gameActive = false;
-      let requiredRoles = [];
-      let assignedPlayers = [];
+      let rolesTersedia = [];
+      let semuaPemain = [];
       let nextId = 1;
-      let currentSpinRole = null;
-      let cupidPlayerId = null;
-      let loversTargetId = null;
+      let roleSaatIni = null;
+      let cupidId = null;
       let loversSet = false;
-
-      let protectedTargetId = null;
-      let werewolfTargetId = null;
-      let witchHealTargetId = null;
-      let witchPoisonTargetId = null;
-      let witchHealUsed = false;
-      let witchPoisonUsed = false;
-      let warriorUsed = false;
-
-      let gameLogs = [];
-      let gameEnded = false;
+      let targetLindung = null;
+      let targetBunuh = null;
+      let targetWarriorMalam = null;
+      let targetHealId = null;
+      let targetPoisonId = null;
+      let healUsed = false;
+      let poisonUsed = false;
+      let gameDimulai = false;
+      let daftarKematian = [];
+      let gameLogs = []; // Log khusus untuk kejadian malam & voting
 
       // DOM Elements
       const jumlahInput = document.getElementById("jumlahPemain");
-      const btnStart = document.getElementById("btnStartGame");
-      const btnResetFull = document.getElementById("btnResetFull");
-      const roleListDisplay = document.getElementById("roleListDisplay");
-      const roleListContent = document.getElementById("roleListContent");
-      const roleDescriptions = document.getElementById("roleDescriptions");
-      const btnStartRoulette = document.getElementById("btnStartRoulette");
-      const rouletteContainer = document.getElementById("rouletteContainer");
+      const btnGenerate = document.getElementById("btnGenerate");
+      const btnReset = document.getElementById("btnReset");
+      const roleListDiv = document.getElementById("roleList");
+      const btnMulaiRoulette = document.getElementById("btnMulaiRoulette");
+      const roulettePanel = document.getElementById("roulettePanel");
+      const roleListPanel = document.getElementById("roleListPanel");
       const rouletteCard = document.getElementById("rouletteCard");
-      const rouletteProgress = document.getElementById("rouletteProgress");
-      const btnSpin = document.getElementById("btnSpinRoulette");
-      const playerInputArea = document.getElementById("playerInputArea");
-      const playerNameInput = document.getElementById("playerNameInput");
-      const btnConfirm = document.getElementById("btnConfirmRole");
-      const playersList = document.getElementById("playersList");
-      const playersStats = document.getElementById("playersStats");
-      const deadList = document.getElementById("deadList");
-      const cupidSection = document.getElementById("cupidSection");
-      const cupidTargetSelect = document.getElementById("cupidTargetSelect");
-      const btnSetLovers = document.getElementById("btnSetLovers");
-      const loversStatus = document.getElementById("loversStatus");
-
-      const guardianSelect = document.getElementById("guardianTargetSelect");
-      const werewolfSelect = document.getElementById("werewolfTargetSelect");
-      const witchHealSelect = document.getElementById("witchHealSelect");
-      const witchPoisonSelect = document.getElementById("witchPoisonSelect");
-      const witchStatus = document.getElementById("witchStatus");
-      const protectionStatus = document.getElementById("protectionStatus");
-      const werewolfTargetStatus = document.getElementById(
-        "werewolfTargetStatus"
-      );
-      const witchActionStatus = document.getElementById("witchActionStatus");
-      const btnSetProtection = document.getElementById("btnSetProtection");
-      const btnSetWerewolfTarget = document.getElementById(
-        "btnSetWerewolfTarget"
-      );
-      const btnExecuteNight = document.getElementById("btnExecuteNight");
-      const btnResetDeath = document.getElementById("btnResetDeath");
-      const btnWitchHeal = document.getElementById("btnWitchHeal");
-      const btnWitchPoison = document.getElementById("btnWitchPoison");
-
-      const warriorTargetSelect = document.getElementById(
-        "warriorTargetSelect"
-      );
-      const warriorStatus = document.getElementById("warriorStatus");
-      const votingTargetSelect = document.getElementById("votingTargetSelect");
-      const btnWarriorKill = document.getElementById("btnWarriorKill");
-      const btnExecuteVoting = document.getElementById("btnExecuteVoting");
-
-      const seerTargetSelect = document.getElementById("seerTargetSelect");
-      const sorcererTargetSelect = document.getElementById(
-        "sorcererTargetSelect"
-      );
-      const hunterTargetSelect = document.getElementById("hunterTargetSelect");
-      const seerResult = document.getElementById("seerResult");
-      const sorcererResult = document.getElementById("sorcererResult");
-      const hunterStatus = document.getElementById("hunterStatus");
-      const btnSeerCheck = document.getElementById("btnSeerCheck");
-      const btnSorcererCheck = document.getElementById("btnSorcererCheck");
-      const btnHunterShoot = document.getElementById("btnHunterShoot");
-
-      const victoryDisplay = document.getElementById("victoryDisplay");
-      const tabNaratorBtn = document.getElementById("tabNaratorBtn");
-      const tabNightBtn = document.getElementById("tabNightBtn");
-      const tabVotingBtn = document.getElementById("tabVotingBtn");
-      const tabDeadBtn = document.getElementById("tabDeadBtn");
-      const tabBlindBtn = document.getElementById("tabBlindBtn");
+      const btnSpin = document.getElementById("btnSpin");
+      const inputNamaArea = document.getElementById("inputNamaArea");
+      const namaPemainInput = document.getElementById("namaPemain");
+      const btnKonfirmasi = document.getElementById("btnKonfirmasi");
+      const progressSpin = document.getElementById("progressSpin");
+      const playersListDiv = document.getElementById("playersList");
+      const cupidArea = document.getElementById("cupidArea");
+      const cupidPilih = document.getElementById("cupidPilih");
+      const btnCupidSet = document.getElementById("btnCupidSet");
+      const targetWerewolf = document.getElementById("targetWerewolf");
+      const targetGuardian = document.getElementById("targetGuardian");
+      const targetHeal = document.getElementById("targetHeal");
+      const targetPoison = document.getElementById("targetPoison");
+      const targetWarrior = document.getElementById("targetWarrior");
+      const targetSeer = document.getElementById("targetSeer");
+      const targetSorcerer = document.getElementById("targetSorcerer");
+      const targetVoting = document.getElementById("targetVoting");
+      const btnSetWerewolf = document.getElementById("btnSetWerewolf");
+      const btnSetGuardian = document.getElementById("btnSetGuardian");
+      const btnHeal = document.getElementById("btnHeal");
+      const btnPoison = document.getElementById("btnPoison");
+      const btnWarriorTebas = document.getElementById("btnWarriorTebas");
+      const btnSeerCek = document.getElementById("btnSeerCek");
+      const btnSorcererCek = document.getElementById("btnSorcererCek");
+      const btnVotingExecute = document.getElementById("btnVotingExecute");
+      const btnEksekusiMalam = document.getElementById("btnEksekusiMalam");
+      const btnResetMati = document.getElementById("btnResetMati");
       const btnClearLog = document.getElementById("btnClearLog");
+      const statusWerewolf = document.getElementById("statusWerewolf");
+      const statusGuardian = document.getElementById("statusGuardian");
+      const statusWitch = document.getElementById("statusWitch");
+      const statusWarrior = document.getElementById("statusWarrior");
+      const witchInfo = document.getElementById("witchInfo");
+      const votingStatus = document.getElementById("votingStatus");
+      const hasilSeer = document.getElementById("hasilSeer");
+      const hasilSorcerer = document.getElementById("hasilSorcerer");
+      const deadListDiv = document.getElementById("deadList");
+      const logListDiv = document.getElementById("logList");
+      const subGuardian = document.getElementById("subGuardian");
+      const subWitch = document.getElementById("subWitch");
+      const subWarrior = document.getElementById("subWarrior");
+      const subSeer = document.getElementById("subSeer");
+      const subSorcerer = document.getElementById("subSorcerer");
+      const btnNarator = document.getElementById("btnNarator");
+      const btnNight = document.getElementById("btnNight");
+      const btnDead = document.getElementById("btnDead");
+      const btnVotingTab = document.getElementById("btnVotingTab");
+      const logTabBtn = document.getElementById("logTabBtn");
 
-      function addLog(message, type = "info") {
-        const timestamp = new Date().toLocaleTimeString();
-        gameLogs.unshift({ time: timestamp, message, type });
-        if (gameLogs.length > 100) gameLogs.pop();
-        renderLogs();
+      // Cek apakah Mayor masih hidup
+      function isMayorAlive() {
+        let mayor = semuaPemain.find((p) => p.role === "Mayor");
+        return mayor ? mayor.hidup : false;
       }
 
-      function renderLogs() {
-        const logContainer = document.getElementById("logContainer");
-        if (logContainer) {
-          logContainer.innerHTML = gameLogs
-            .map(
-              (log) =>
-                `<div class="log-entry log-${log.type}">[${log.time}] ${log.message}</div>`
-            )
-            .join("");
-          if (gameLogs.length === 0)
-            logContainer.innerHTML =
-              '<div class="log-entry log-info">📋 Belum ada log.</div>';
+      // Update status tab Log berdasarkan Mayor
+      function updateLogTabStatus() {
+        if (!logTabBtn) return;
+
+        if (gameDimulai) {
+          if (isMayorAlive()) {
+            logTabBtn.classList.remove("disabled-log");
+            logTabBtn.style.opacity = "1";
+            logTabBtn.style.cursor = "pointer";
+            logTabBtn.style.pointerEvents = "auto";
+          } else {
+            logTabBtn.classList.add("disabled-log");
+            logTabBtn.style.opacity = "0.5";
+            logTabBtn.style.cursor = "not-allowed";
+            logTabBtn.style.pointerEvents = "none";
+          }
+        } else {
+          logTabBtn.classList.remove("disabled-log");
+          logTabBtn.style.opacity = "1";
+          logTabBtn.style.cursor = "pointer";
+          logTabBtn.style.pointerEvents = "auto";
         }
       }
 
-      function generateBalancedRoles(jumlah) {
-        let werewolfCount = Math.max(2, Math.floor(jumlah / 5));
-        if (werewolfCount > Math.floor(jumlah / 3))
-          werewolfCount = Math.floor(jumlah / 3);
+      // Log khusus untuk kejadian malam & voting (hanya role, tanpa nama)
+      function addGameLog(message, type = "info") {
+        let t = new Date().toLocaleTimeString();
+        gameLogs.unshift({ time: t, msg: message });
+        if (gameLogs.length > 100) gameLogs.pop();
 
+        // Update tampilan log
+        logListDiv.innerHTML = gameLogs
+          .map(
+            (l) =>
+              `<div style="padding:5px; border-bottom:1px solid #333; color: ${
+                type === "death" ? "#ff6666" : "#66ffaa"
+              }">[${l.time}] ${l.msg}</div>`
+          )
+          .join("");
+        if (gameLogs.length === 0)
+          logListDiv.innerHTML = "<div>Belum ada log</div>";
+      }
+
+      // Helper untuk mendapatkan role dari ID
+      function getRoleNameById(id) {
+        let player = semuaPemain.find((p) => p.id === id);
+        return player ? player.role : "Unknown";
+      }
+
+      function showVictoryPage(winner, reason, emoji) {
+        let overlay = document.createElement("div");
+        overlay.className = "victory-overlay";
+        overlay.innerHTML = `
+            <div class="victory-card">
+                <div class="victory-emoji">${emoji}</div>
+                <div class="victory-title">${winner} MENANG!</div>
+                <div class="victory-reason">📖 ${reason}</div>
+                <button class="primary" id="victoryRestartBtn" style="margin-top:20px;">🔄 Main Lagi</button>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+        document.getElementById("victoryRestartBtn").onclick = () => {
+          location.reload();
+        };
+      }
+
+      function updateUI() {
+        if (!semuaPemain.length) {
+          playersListDiv.innerHTML = "<div>Belum ada pemain</div>";
+          return;
+        }
+        let alive = semuaPemain.filter((p) => p.hidup).length;
+        let dead = semuaPemain.length - alive;
+        let html = `<div style="margin-bottom:10px;">💚 Hidup: ${alive} | 💀 Mati: ${dead}</div>`;
+        semuaPemain.forEach((p) => {
+          let lover = p.pasangan
+            ? ` ❤️ ${
+                semuaPemain.find((pl) => pl.id === p.pasangan)?.nama || "?"
+              }`
+            : "";
+          html += `<div class="role-card"><div><strong>${
+            p.role
+          }</strong>${lover}</div><div>${p.nama} ${
+            !p.hidup ? "💀" : "✅"
+          }</div></div>`;
+        });
+        playersListDiv.innerHTML = html;
+
+        let alivePlayers = semuaPemain.filter((p) => p.hidup);
+        let options =
+          '<option value="">-- Pilih --</option>' +
+          alivePlayers
+            .map((p) => `<option value="${p.id}">${p.nama}</option>`)
+            .join("");
+        targetWerewolf.innerHTML = options;
+        targetGuardian.innerHTML = options;
+        targetHeal.innerHTML = options;
+        targetPoison.innerHTML = options;
+        targetWarrior.innerHTML = options;
+        targetSeer.innerHTML = options;
+        targetSorcerer.innerHTML = options;
+        targetVoting.innerHTML = options;
+
+        let witch = semuaPemain.find((p) => p.role === "Witch");
+        witchInfo.innerHTML = `🧪 Witch: ${
+          witch?.hidup ? "✅ Hidup" : "💀 Mati"
+        } | 💊 Heal: ${healUsed ? "❌" : "✅"} | ☠️ Poison: ${
+          poisonUsed ? "❌" : "✅"
+        }`;
+
+        let hasGuardian = semuaPemain.some((p) => p.role === "Guardian");
+        let hasWitch = semuaPemain.some((p) => p.role === "Witch");
+        let hasWarrior = semuaPemain.some((p) => p.role === "Warrior");
+        let hasSeer = semuaPemain.some((p) => p.role === "Seer");
+        let hasSorcerer = semuaPemain.some((p) => p.role === "Sorcerer");
+
+        subGuardian.style.display = hasGuardian ? "inline-block" : "none";
+        subWitch.style.display = hasWitch ? "inline-block" : "none";
+        subWarrior.style.display = hasWarrior ? "inline-block" : "none";
+        subSeer.style.display = hasSeer ? "inline-block" : "none";
+        subSorcerer.style.display = hasSorcerer ? "inline-block" : "none";
+
+        updateDeadList();
+        updateLogTabStatus();
+      }
+
+      function updateDeadList() {
+        if (daftarKematian.length === 0) {
+          deadListDiv.innerHTML =
+            '<div class="info-box">💚 Belum ada korban</div>';
+          return;
+        }
+        deadListDiv.innerHTML = daftarKematian
+          .map(
+            (d, i) =>
+              `<div class="dead-card ${i === 0 ? "new" : ""}"><span>💀 ${
+                d.nama
+              }</span><span>📌 ${d.alasan}</span></div>`
+          )
+          .join("");
+        setTimeout(() => {
+          let nc = document.querySelector(".dead-card.new");
+          if (nc) nc.classList.remove("new");
+        }, 1000);
+      }
+
+      function recordKematian(id, nama, alasan) {
+        daftarKematian.unshift({ id, nama, alasan });
+        updateDeadList();
+      }
+
+      function matikanPemain(id, sumber) {
+        let target = semuaPemain.find((p) => p.id === id);
+        if (!target || !target.hidup) return false;
+
+        let roleTarget = target.role;
+        let alasan = "";
+        let logMessage = "";
+
+        if (sumber === "Werewolf") {
+          alasan = "dibunuh Werewolf 🐺";
+          logMessage = `🐺 Werewolf membunuh ${roleTarget}`;
+        } else if (sumber === "Poison") {
+          alasan = "diracun Witch ☠️";
+          logMessage = `🧪 Witch meracuni ${roleTarget}`;
+        } else if (sumber === "Voting") {
+          alasan = "dieliminasi desa 🗳️";
+          logMessage = `🗳️ ${roleTarget} dieliminasi desa`;
+        } else if (sumber === "Warrior") {
+          alasan = "ditebas Warrior ⚔️";
+          logMessage = `⚔️ Warrior menebas ${roleTarget}`;
+        } else if (sumber === "Warrior Suicide") {
+          alasan = "Warrior tebas orang tak bersalah 💀";
+          logMessage = `💀 Warrior tewas karena menebas ${roleTarget} (bukan Werewolf)`;
+        } else if (sumber === "Hunter Revenge") {
+          alasan = "ditembak Hunter 🔫";
+          logMessage = `🔫 Hunter membalas dendam menembak ${roleTarget}`;
+        } else if (sumber === "Lycan Curse") {
+          alasan = "ikut mati karena Lycan 💀";
+          logMessage = `😈 ${roleTarget} ikut mati karena Lycan dieliminasi`;
+        } else {
+          alasan = sumber;
+          logMessage = `${roleTarget} ${sumber}`;
+        }
+
+        // Cursed Villager effect
+        if (target.role === "Cursed Villager" && sumber === "Werewolf") {
+          let ww = semuaPemain.filter((p) => p.role === "Werewolf" && p.hidup);
+          if (ww.length > 0) {
+            let randomWw = ww[Math.floor(Math.random() * ww.length)];
+            let wolfRole = randomWw.role;
+            addGameLog(
+              `⚠️ Cursed Villager mati! Werewolf ${wolfRole} tewas karena kutukan`,
+              "death"
+            );
+            recordKematian(
+              randomWw.id,
+              randomWw.nama,
+              "tewas oleh kutukan Cursed Villager"
+            );
+            randomWw.hidup = false;
+            if (randomWw.pasangan) {
+              let partner = semuaPemain.find((p) => p.id === randomWw.pasangan);
+              if (partner && partner.hidup) {
+                partner.hidup = false;
+                recordKematian(
+                  partner.id,
+                  partner.nama,
+                  "patah hati karena kekasih meninggal 💔"
+                );
+                addGameLog(
+                  `💔 ${partner.role} mati karena patah hati (kekasih dari ${wolfRole})`,
+                  "death"
+                );
+              }
+            }
+          }
+        }
+
+        // Strongman
+        if (target.role === "Strongman") {
+          if (!target.terluka) {
+            target.terluka = true;
+            updateUI();
+            return false;
+          }
+        }
+
+        target.hidup = false;
+        recordKematian(target.id, target.nama, alasan);
+        addGameLog(`💀 ${logMessage}`, "death");
+
+        // Lovers effect
+        if (target.pasangan) {
+          let partner = semuaPemain.find((p) => p.id === target.pasangan);
+          if (partner && partner.hidup) {
+            partner.hidup = false;
+            recordKematian(
+              partner.id,
+              partner.nama,
+              "patah hati karena kekasih meninggal 💔"
+            );
+            addGameLog(
+              `💔 ${partner.role} mati karena patah hati (kekasih dari ${target.role})`,
+              "death"
+            );
+          }
+        }
+
+        // Hunter revenge
+        if (target.role === "Hunter") {
+          let alive = semuaPemain.filter((p) => p.hidup);
+          if (alive.length > 0) {
+            let listTarget = alive
+              .map((p, idx) => `${idx + 1}. ${p.nama}`)
+              .join("\n");
+            let pilihIdx = prompt(
+              `HUNTER ${target.nama} MATI!\nPilih target untuk ditembak:\n${listTarget}\nMasukkan nomor (1-${alive.length}):`
+            );
+            let idx = parseInt(pilihIdx) - 1;
+            if (idx >= 0 && idx < alive.length) {
+              let victim = alive[idx];
+              addGameLog(
+                `🔫 Hunter menembak ${victim.role} sebagai balas dendam`,
+                "death"
+              );
+              victim.hidup = false;
+              recordKematian(
+                victim.id,
+                victim.nama,
+                "ditembak Hunter sebagai balas dendam 🔫"
+              );
+              if (victim.pasangan) {
+                let partner = semuaPemain.find((p) => p.id === victim.pasangan);
+                if (partner && partner.hidup) {
+                  partner.hidup = false;
+                  recordKematian(
+                    partner.id,
+                    partner.nama,
+                    "patah hati karena kekasih meninggal 💔"
+                  );
+                  addGameLog(
+                    `💔 ${partner.role} mati karena patah hati (kekasih dari ${victim.role})`,
+                    "death"
+                  );
+                }
+              }
+              updateUI();
+              cekPemenang();
+            }
+          }
+        }
+
+        updateUI();
+        cekPemenang();
+        return true;
+      }
+
+      function cekPemenang() {
+        let hidup = semuaPemain.filter((p) => p.hidup);
+        let ww = semuaPemain.filter((p) => p.role === "Werewolf" && p.hidup);
+        let fool = semuaPemain.find((p) => p.role === "The Fool" && !p.hidup);
+
+        if (fool) {
+          showVictoryPage(
+            "THE FOOL",
+            "The Fool berhasil dieliminasi! Wabah menyebar dan membunuh semua penduduk desa!",
+            "🎭"
+          );
+          return true;
+        }
+
+        if (hidup.length === 2) {
+          let lovers = hidup.filter((p) => p.pasangan);
+          if (lovers.length === 2 && lovers[0].pasangan === lovers[1].id) {
+            showVictoryPage(
+              "LOVERS",
+              "Pasangan kekasih berhasil bertahan hingga akhir! Mereka berdua menjadi yang terakhir hidup! ❤️",
+              "❤️"
+            );
+            return true;
+          }
+        }
+
+        if (
+          ww.length >= hidup.filter((p) => p.role !== "Werewolf").length &&
+          ww.length > 0
+        ) {
+          showVictoryPage(
+            "WEREWOLF",
+            "Serigala berhasil menguasai desa! Jumlah serigala sama atau lebih banyak dari warga yang tersisa! 🐺",
+            "🐺"
+          );
+          return true;
+        }
+
+        if (ww.length === 0 && hidup.length > 0) {
+          showVictoryPage(
+            "DESA",
+            "Warga desa berhasil membasmi semua serigala! Kedamaian kembali ke desa! 🏘️",
+            "🏘️"
+          );
+          return true;
+        }
+        return false;
+      }
+
+      function generateRole() {
+        let jumlah = parseInt(jumlahInput.value);
+        jumlah = Math.min(20, Math.max(5, jumlah));
+        let wc = Math.max(2, Math.floor(jumlah / 5));
         let roles = [];
-        for (let i = 0; i < werewolfCount; i++) roles.push("Werewolf");
-
-        const uniqueRoles = [
+        for (let i = 0; i < wc; i++) roles.push("Werewolf");
+        let unik = [
           "Seer",
           "Sorcerer",
           "Lycan",
@@ -877,942 +934,545 @@
           "Lovers (Cupid)",
           "Cursed Villager",
         ];
-        const shuffledUnique = [...uniqueRoles];
-        for (let i = shuffledUnique.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [shuffledUnique[i], shuffledUnique[j]] = [
-            shuffledUnique[j],
-            shuffledUnique[i],
-          ];
+        let acak = [...unik];
+        for (let i = acak.length - 1; i > 0; i--) {
+          let j = Math.floor(Math.random() * (i + 1));
+          [acak[i], acak[j]] = [acak[j], acak[i]];
         }
-
-        let hasSeer = false;
-        let hasSorcerer = false;
-        let hasLycan = false;
-
-        let remainingSlots = jumlah - werewolfCount;
-        let uniqueRoleCount = Math.min(remainingSlots, shuffledUnique.length);
-
-        for (let i = 0; i < uniqueRoleCount; i++) {
-          const role = shuffledUnique[i];
-          roles.push(role);
-          if (role === "Seer") hasSeer = true;
-          if (role === "Sorcerer") hasSorcerer = true;
-          if (role === "Lycan") hasLycan = true;
+        let hasSeer = false,
+          hasSorcerer = false,
+          hasLycan = false;
+        let sisa = jumlah - wc;
+        let uc = Math.min(sisa, acak.length);
+        for (let i = 0; i < uc; i++) {
+          let r = acak[i];
+          roles.push(r);
+          if (r === "Seer") hasSeer = true;
+          if (r === "Sorcerer") hasSorcerer = true;
+          if (r === "Lycan") hasLycan = true;
         }
-
-        // RULE: Sorcerer MUST have Seer
-        if (hasSorcerer && !hasSeer) {
-          const indexToReplace = roles.findIndex(
-            (r) =>
-              r !== "Werewolf" &&
-              r !== "Villager" &&
-              r !== "Seer" &&
-              r !== "Sorcerer"
-          );
-          if (indexToReplace !== -1) {
-            roles[indexToReplace] = "Seer";
-            hasSeer = true;
-          } else {
-            roles.push("Seer");
-          }
-        }
-
-        // RULE: Lycan MUST have Seer (Lycan needs Seer to trick)
-        if (hasLycan && !hasSeer) {
-          const indexToReplace = roles.findIndex(
-            (r) => r !== "Werewolf" && r !== "Villager" && r !== "Seer"
-          );
-          if (indexToReplace !== -1) {
-            roles[indexToReplace] = "Seer";
-            hasSeer = true;
-          } else {
-            roles.push("Seer");
-          }
-        }
-
-        // Add villagers if needed (minimal)
-        while (roles.length < jumlah) {
-          if (roles.filter((r) => r === "Villager").length < 2) {
-            roles.push("Villager");
-          } else {
-            const remainingRole = uniqueRoles.find((r) => !roles.includes(r));
-            if (remainingRole) roles.push(remainingRole);
-            else roles.push("Villager");
-          }
-        }
-
+        if (hasSorcerer && !hasSeer) roles.push("Seer");
+        if (hasLycan && !hasSeer) roles.push("Seer");
+        while (roles.length < jumlah) roles.push("Villager");
         for (let i = roles.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
+          let j = Math.floor(Math.random() * (i + 1));
           [roles[i], roles[j]] = [roles[j], roles[i]];
         }
+        rolesTersedia = roles;
 
-        return roles;
+        let counts = {};
+        roles.forEach((r) => {
+          counts[r] = (counts[r] || 0) + 1;
+        });
+        roleListDiv.innerHTML = Object.entries(counts)
+          .map(([r, c]) => `<span class="role-tag">${r} x${c}</span>`)
+          .join("");
+        roleListPanel.style.display = "block";
+        roulettePanel.style.display = "none";
       }
 
-      function isRoleAvailable(role) {
-        if (role === "Werewolf" || role === "Villager") {
-          const taken = assignedPlayers.filter((p) => p.role === role).length;
-          const needed = requiredRoles.filter((r) => r === role).length;
-          return taken < needed;
-        } else {
-          return !assignedPlayers.some((p) => p.role === role);
-        }
-      }
-
-      function getRemainingRoles() {
-        const remaining = [];
-        for (let role of requiredRoles) {
-          const taken = assignedPlayers.filter((p) => p.role === role).length;
-          const needed = requiredRoles.filter((r) => r === role).length;
-          if (taken < needed) remaining.push(role);
-        }
-        return remaining;
+      function mulaiRoulette() {
+        semuaPemain = [];
+        daftarKematian = [];
+        gameLogs = [];
+        nextId = 1;
+        cupidId = null;
+        loversSet = false;
+        targetLindung = null;
+        targetBunuh = null;
+        targetWarriorMalam = null;
+        targetHealId = null;
+        targetPoisonId = null;
+        healUsed = false;
+        poisonUsed = false;
+        gameDimulai = false;
+        roleListPanel.style.display = "none";
+        roulettePanel.style.display = "block";
+        btnSpin.disabled = false;
+        rouletteCard.innerHTML = `<div style="font-size:4rem;">🎴</div><div>Klik spin untuk mengambil role</div>`;
+        progressSpin.innerHTML = `🎮 Total ${rolesTersedia.length} role. Klik SPIN untuk mulai.`;
+        logListDiv.innerHTML = "<div>Belum ada log</div>";
       }
 
       function spinRoulette() {
-        if (!gameActive || gameEnded) {
-          alert("Game belum dimulai!");
-          return;
-        }
-        const remaining = getRemainingRoles();
-        if (remaining.length === 0) {
-          alert("✅ Semua role sudah terisi!");
-          rouletteContainer.style.display = "none";
-          showGameTabs();
-          updateAllDropdowns();
-          checkCupidAndShowLovers();
-          addLog("✅ Semua role terisi. Game dimulai!", "info");
+        if (rolesTersedia.length === 0) {
+          alert("Semua role sudah terisi!");
+          roulettePanel.style.display = "none";
+          gameDimulai = true;
+          btnNarator.style.display = "flex";
+          btnNight.style.display = "flex";
+          btnDead.style.display = "flex";
+          btnVotingTab.style.display = "flex";
+          updateUI();
+          updateLogTabStatus();
+
+          let cupid = semuaPemain.find((p) => p.role === "Lovers (Cupid)");
+          if (cupid && !loversSet) {
+            cupidId = cupid.id;
+            cupidArea.style.display = "block";
+            let other = semuaPemain.filter((p) => p.id !== cupid.id);
+            cupidPilih.innerHTML =
+              '<option value="">-- Pilih Pasangan --</option>' +
+              other
+                .map(
+                  (p) =>
+                    `<option value="${p.id}">${p.nama} (${p.role})</option>`
+                )
+                .join("");
+          }
           return;
         }
 
         let spins = 0;
-        const maxSpins = 15;
-        const interval = setInterval(() => {
-          const randomRole =
-            remaining[Math.floor(Math.random() * remaining.length)];
-          rouletteCard.innerHTML = `<div class="role-big">🎲</div><div>${randomRole}</div>`;
+        let maxSpins = 15;
+        let interval = setInterval(() => {
+          let randomRole =
+            rolesTersedia[Math.floor(Math.random() * rolesTersedia.length)];
+          rouletteCard.innerHTML = `<div style="font-size:4rem;">🎲</div><div>${randomRole}</div>`;
           spins++;
           if (spins >= maxSpins) {
             clearInterval(interval);
-            const finalRole =
-              remaining[Math.floor(Math.random() * remaining.length)];
-            currentSpinRole = finalRole;
-            rouletteCard.innerHTML = `<div class="role-big">✨ ${finalRole} ✨</div><div style="font-size:0.8rem;">${
-              ROLE_DATABASE[finalRole]?.desc || ""
-            }</div>`;
-            playerInputArea.style.display = "block";
-            playerNameInput.value = "";
-            playerNameInput.focus();
-            rouletteProgress.innerHTML = `📌 Role: ${finalRole}. ${
-              ROLE_DATABASE[finalRole]?.desc || ""
-            }`;
+            let finalRole =
+              rolesTersedia[Math.floor(Math.random() * rolesTersedia.length)];
+            roleSaatIni = finalRole;
+            rouletteCard.innerHTML = `<div style="font-size:4rem;">✨ ${finalRole} ✨</div><div>Role terpilih!</div>`;
+            inputNamaArea.style.display = "block";
+            namaPemainInput.value = "";
+            namaPemainInput.focus();
+            progressSpin.innerHTML = `📌 Role: ${finalRole}. Masukkan nama pemain.`;
             btnSpin.disabled = true;
           }
         }, 60);
       }
 
-      function confirmRole() {
-        if (!currentSpinRole) {
-          alert("Spin dulu!");
-          return;
-        }
-        const playerName = playerNameInput.value.trim();
-        if (!playerName) {
+      function konfirmasiRole() {
+        let nama = namaPemainInput.value.trim();
+        if (!nama) {
           alert("Masukkan nama!");
           return;
         }
-        if (!isRoleAvailable(currentSpinRole)) {
-          alert(`⚠️ Role ${currentSpinRole} sudah tidak tersedia!`);
-          resetSpin();
-          btnSpin.disabled = false;
-          rouletteCard.innerHTML = `<div class="role-big">🎴</div><div>Klik spin untuk berikutnya</div>`;
-          return;
-        }
+        let index = rolesTersedia.indexOf(roleSaatIni);
+        if (index !== -1) rolesTersedia.splice(index, 1);
 
-        assignedPlayers.push({
+        semuaPemain.push({
           id: nextId++,
-          role: currentSpinRole,
-          playerName: playerName,
-          alive: true,
-          wounded: false,
-          loversWith: null,
+          role: roleSaatIni,
+          nama: nama,
+          hidup: true,
+          terluka: false,
+          pasangan: null,
         });
 
-        addLog(`📝 ${playerName} mendapat role ${currentSpinRole}`, "info");
-        updateAllDisplays();
-        resetSpin();
+        inputNamaArea.style.display = "none";
+        roleSaatIni = null;
 
-        const remaining = getRemainingRoles();
-        if (remaining.length === 0) {
-          alert("🎉 Semua role terisi!");
-          rouletteContainer.style.display = "none";
-          showGameTabs();
-          updateAllDropdowns();
-          checkCupidAndShowLovers();
-          addLog("✅ Game dimulai!", "info");
+        if (rolesTersedia.length === 0) {
+          alert("🎉 Semua role terisi! Game dimulai!");
+          roulettePanel.style.display = "none";
+          gameDimulai = true;
+          btnNarator.style.display = "flex";
+          btnNight.style.display = "flex";
+          btnDead.style.display = "flex";
+          btnVotingTab.style.display = "flex";
+
+          let cupid = semuaPemain.find((p) => p.role === "Lovers (Cupid)");
+          if (cupid && !loversSet) {
+            cupidId = cupid.id;
+            cupidArea.style.display = "block";
+            let other = semuaPemain.filter((p) => p.id !== cupid.id);
+            cupidPilih.innerHTML =
+              '<option value="">-- Pilih Pasangan --</option>' +
+              other
+                .map(
+                  (p) =>
+                    `<option value="${p.id}">${p.nama} (${p.role})</option>`
+                )
+                .join("");
+          }
+          updateUI();
+          updateLogTabStatus();
         } else {
-          rouletteProgress.innerHTML = `✅ ${playerName} → ${currentSpinRole}. Sisa: ${remaining.length} role.`;
           btnSpin.disabled = false;
-          rouletteCard.innerHTML = `<div class="role-big">🎴</div><div>Klik spin untuk berikutnya</div>`;
-          currentSpinRole = null;
+          rouletteCard.innerHTML = `<div style="font-size:4rem;">🎴</div><div>Klik spin untuk role berikutnya</div>`;
+          progressSpin.innerHTML = `✅ ${nama} → ${roleSaatIni}. Sisa: ${rolesTersedia.length} role. Klik SPIN untuk lanjut.`;
         }
       }
 
-      function checkCupidAndShowLovers() {
-        const cupid = assignedPlayers.find((p) => p.role === "Lovers (Cupid)");
-        if (cupid && !loversSet) {
-          cupidPlayerId = cupid.id;
-          cupidSection.style.display = "block";
-          const otherPlayers = assignedPlayers.filter((p) => p.id !== cupid.id);
-          cupidTargetSelect.innerHTML =
-            '<option value="">-- Pilih Pasangan --</option>' +
-            otherPlayers
-              .map(
-                (p) =>
-                  `<option value="${p.id}">${p.playerName} (${p.role})</option>`
-              )
-              .join("");
-          addLog(
-            `❤️ Cupid ${cupid.playerName} akan memilih pasangannya`,
-            "info"
-          );
-        }
-      }
-
-      function setLovers() {
-        const targetId = parseInt(cupidTargetSelect.value);
+      function setCupid() {
+        let targetId = parseInt(cupidPilih.value);
         if (!targetId) {
-          alert("Pilih pasangan untuk Cupid!");
+          alert("Pilih pasangan!");
           return;
         }
-
-        const cupid = assignedPlayers.find((p) => p.id === cupidPlayerId);
-        const target = assignedPlayers.find((p) => p.id === targetId);
-
-        if (!cupid || !target) return;
-
-        cupid.loversWith = targetId;
-        target.loversWith = cupidPlayerId;
+        let cupid = semuaPemain.find((p) => p.id === cupidId);
+        let target = semuaPemain.find((p) => p.id === targetId);
+        cupid.pasangan = targetId;
+        target.pasangan = cupidId;
         loversSet = true;
-
-        loversStatus.innerHTML = `❤️ Cupid ${cupid.playerName} jatuh cinta dengan ${target.playerName}! Mereka akan mati bersama jika salah satu meninggal.`;
-        addLog(
-          `❤️ Cupid ${cupid.playerName} memilih ${target.playerName} sebagai kekasih!`,
+        cupidArea.style.display = "none";
+        addGameLog(
+          `❤️ Cupid menjodohkan ${cupid.role} dengan ${target.role}`,
           "info"
         );
-
-        cupidSection.style.display = "none";
-        updateAllDisplays();
+        updateUI();
       }
 
-      function resetSpin() {
-        currentSpinRole = null;
-        playerInputArea.style.display = "none";
-        playerNameInput.value = "";
+      function pindahKeTabKorban() {
+        document
+          .querySelectorAll("#mainTabs .tab-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+        document
+          .querySelectorAll(".tab-panel")
+          .forEach((panel) => panel.classList.remove("active"));
+        btnDead.classList.add("active");
+        document.getElementById("panel-dead").classList.add("active");
       }
 
-      function updateDeadDisplay() {
-        const dead = assignedPlayers.filter((p) => !p.alive);
-        if (dead.length === 0) {
-          deadList.innerHTML =
-            '<div class="info-box">💚 Belum ada korban.</div>';
-          return;
-        }
-        deadList.innerHTML = dead
-          .map((p) => `<div class="dead-card">💀 ${p.playerName}</div>`)
-          .join("");
-      }
-
-      function updateAllDisplays() {
-        if (!assignedPlayers.length) {
-          playersList.innerHTML = "<div>Belum ada pemain</div>";
-          playersStats.innerHTML = "";
+      function eksekusiMalam() {
+        if (!gameDimulai) {
+          alert("Game belum dimulai!");
           return;
         }
 
-        const alive = assignedPlayers.filter((p) => p.alive).length;
-        const dead = assignedPlayers.length - alive;
-
-        playersStats.innerHTML = `<div class="stat-item">👥 Total: <span>${assignedPlayers.length}</span></div><div class="stat-item">💚 Hidup: <span>${alive}</span></div><div class="stat-item">💀 Mati: <span>${dead}</span></div>`;
-
-        let html = "";
-        assignedPlayers.forEach((p) => {
-          const loverInfo = p.loversWith
-            ? ` ❤️ ${
-                assignedPlayers.find((pl) => pl.id === p.loversWith)
-                  ?.playerName || "?"
-              }`
-            : "";
-          const roleInfo = ROLE_DATABASE[p.role] || { team: "❓", ability: "" };
-          html += `<div class="assigned-card ${
-            !p.alive ? "status-dead" : ""
-          }"><div><strong>${p.role}</strong>${loverInfo}<br><small>${
-            roleInfo.team
-          } - ${roleInfo.ability}</small></div><span>${p.playerName} ${
-            !p.alive ? "💀" : "✅"
-          }</span></div>`;
-        });
-        playersList.innerHTML = html;
-        updateDeadDisplay();
-        updateAllDropdowns();
-      }
-
-      function updateAllDropdowns() {
-        const alivePlayers = assignedPlayers.filter((p) => p.alive);
-        const nameOnlyOptions = alivePlayers
-          .map((p) => `<option value="${p.id}">${p.playerName}</option>`)
-          .join("");
-
-        guardianSelect.innerHTML =
-          '<option value="">-- Pilih --</option>' + nameOnlyOptions;
-        werewolfSelect.innerHTML =
-          '<option value="">-- Pilih --</option>' + nameOnlyOptions;
-        witchHealSelect.innerHTML =
-          '<option value="">-- Heal --</option>' + nameOnlyOptions;
-        witchPoisonSelect.innerHTML =
-          '<option value="">-- Poison --</option>' + nameOnlyOptions;
-        seerTargetSelect.innerHTML =
-          '<option value="">-- Pilih --</option>' + nameOnlyOptions;
-        sorcererTargetSelect.innerHTML =
-          '<option value="">-- Pilih --</option>' + nameOnlyOptions;
-        hunterTargetSelect.innerHTML =
-          '<option value="">-- Pilih --</option>' + nameOnlyOptions;
-        warriorTargetSelect.innerHTML =
-          '<option value="">-- Pilih --</option>' + nameOnlyOptions;
-        votingTargetSelect.innerHTML =
-          '<option value="">-- Pilih --</option>' + nameOnlyOptions;
-
-        const witch = assignedPlayers.find((p) => p.role === "Witch");
-        witchStatus.innerHTML = `🧪 Witch: ${
-          witch?.alive ? "✅ Hidup" : "💀 Mati"
-        } | 💊 Heal: ${witchHealUsed ? "❌" : "✅"} | ☠️ Poison: ${
-          witchPoisonUsed ? "❌" : "✅"
-        }`;
-
-        const warrior = assignedPlayers.find((p) => p.role === "Warrior");
-        warriorStatus.innerHTML = `⚔️ Warrior: ${
-          warrior?.alive ? "✅ Hidup" : "💀 Mati"
-        } | ${warriorUsed ? "Sudah tebas" : "Belum tebas"}`;
-
-        const hunter = assignedPlayers.find((p) => p.role === "Hunter");
-        hunterStatus.innerHTML = `🔫 Hunter: ${
-          hunter?.alive ? "✅ Hidup" : "💀 Mati (bisa tembak)"
-        }`;
-
-        document.getElementById("guardianActionGroup").style.display =
-          assignedPlayers.some((p) => p.role === "Guardian") ? "block" : "none";
-        document.getElementById("witchActionGroup").style.display =
-          assignedPlayers.some((p) => p.role === "Witch") ? "block" : "none";
-        document.getElementById("warriorActionGroup").style.display =
-          assignedPlayers.some((p) => p.role === "Warrior") ? "block" : "none";
-        document.getElementById("seerActionGroup").style.display =
-          assignedPlayers.some((p) => p.role === "Seer") ? "block" : "none";
-        document.getElementById("sorcererActionGroup").style.display =
-          assignedPlayers.some((p) => p.role === "Sorcerer") ? "block" : "none";
-        document.getElementById("hunterActionGroup").style.display =
-          assignedPlayers.some((p) => p.role === "Hunter") ? "block" : "none";
-      }
-
-      function showGameTabs() {
-        tabNaratorBtn.style.display = "flex";
-        tabNightBtn.style.display = "flex";
-        tabVotingBtn.style.display = "flex";
-        tabDeadBtn.style.display = "flex";
-        tabBlindBtn.style.display = "flex";
-      }
-
-      function killPlayerDirectly(targetId, source) {
-        const target = assignedPlayers.find((p) => p.id === targetId);
-        if (!target || !target.alive) return false;
-
-        if (target.role === "Cursed Villager" && source === "Werewolf") {
-          addLog(
-            `⚠️ ${target.playerName} (Cursed Villager)! Werewolf akan mati!`,
-            "warning"
+        if (targetWarriorMalam) {
+          let warrior = semuaPemain.find(
+            (p) => p.role === "Warrior" && p.hidup
           );
-          const werewolves = assignedPlayers.filter(
-            (p) => p.role === "Werewolf" && p.alive
-          );
-          if (werewolves.length > 0) {
-            const randomWolf =
-              werewolves[Math.floor(Math.random() * werewolves.length)];
-            addLog(
-              `💀 Kutukan! ${randomWolf.playerName} (Werewolf) mati!`,
-              "death"
-            );
-            randomWolf.alive = false;
-            if (randomWolf.loversWith) {
-              const partner = assignedPlayers.find(
-                (p) => p.id === randomWolf.loversWith
-              );
-              if (partner && partner.alive) partner.alive = false;
-            }
-          }
-        }
-
-        if (target.role === "Strongman") {
-          if (!target.wounded) {
-            target.wounded = true;
-            addLog(`⚠️ ${target.playerName} (Strongman) terluka!`, "warning");
-            updateAllDisplays();
-            return false;
-          } else {
-            target.alive = false;
-            addLog(`💀 ${target.playerName} (Strongman) mati!`, "death");
-            applyDeathConsequences(target.id);
-            return true;
-          }
-        } else {
-          target.alive = false;
-          addLog(
-            `💀 ${target.playerName} (${target.role}) mati karena ${source}.`,
-            "death"
-          );
-          applyDeathConsequences(target.id);
-          return true;
-        }
-      }
-
-      function applyDeathConsequences(deadId) {
-        const dead = assignedPlayers.find((p) => p.id === deadId);
-        if (!dead) return;
-
-        if (dead.loversWith) {
-          const partner = assignedPlayers.find((p) => p.id === dead.loversWith);
-          if (partner && partner.alive) {
-            partner.alive = false;
-            addLog(`💔 Patah hati! ${partner.playerName} ikut mati.`, "death");
-          }
-        }
-
-        updateAllDisplays();
-        checkVictoryCondition();
-      }
-
-      function checkVictoryCondition() {
-        if (gameEnded) return;
-        const alive = assignedPlayers.filter((p) => p.alive);
-        const werewolves = assignedPlayers.filter(
-          (p) => p.role === "Werewolf" && p.alive
-        );
-
-        // Lovers win condition (hanya mereka berdua yang hidup)
-        if (alive.length === 2) {
-          const lovers = alive.filter((p) => p.loversWith);
-          if (lovers.length === 2 && lovers[0].loversWith === lovers[1].id) {
-            gameEnded = true;
-            victoryDisplay.style.display = "block";
-            victoryDisplay.innerHTML =
-              "❤️ PASANGAN LOVERS MENANG! ❤️<br>Mereka berdua menjadi yang terakhir hidup!";
-            addLog("🏆 LOVERS MENANG!", "info");
-            return;
-          }
-        }
-
-        const nonWerewolves = alive.filter((p) => p.role !== "Werewolf").length;
-        if (werewolves.length >= nonWerewolves && werewolves.length > 0) {
-          gameEnded = true;
-          victoryDisplay.style.display = "block";
-          victoryDisplay.innerHTML = "🐺 WEREWOLF MENANG! 🐺";
-          addLog("🏆 WEREWOLF MENANG!", "info");
-          return;
-        }
-
-        if (werewolves.length === 0 && alive.length > 0) {
-          gameEnded = true;
-          victoryDisplay.style.display = "block";
-          victoryDisplay.innerHTML = "🏘️ DESA MENANG! 🏘️";
-          addLog("🏆 DESA MENANG!", "info");
-          return;
-        }
-
-        victoryDisplay.style.display = "none";
-      }
-
-      function executeNight() {
-        if (gameEnded) {
-          alert("Game selesai!");
-          return;
-        }
-        addLog("🌙 ===== EKSEKUSI MALAM ===== ", "night");
-
-        if (witchPoisonTargetId) {
-          const poisoned = assignedPlayers.find(
-            (p) => p.id === witchPoisonTargetId
-          );
-          if (poisoned && poisoned.alive) {
-            addLog(`☠️ Witch meracuni ${poisoned.playerName}!`, "death");
-            killPlayerDirectly(poisoned.id, "Witch Poison");
-          }
-          witchPoisonTargetId = null;
-        }
-
-        if (werewolfTargetId) {
-          const target = assignedPlayers.find((p) => p.id === werewolfTargetId);
-          if (target && target.alive) {
-            const isProtected = protectedTargetId === werewolfTargetId;
-            const isHealed = witchHealTargetId === werewolfTargetId;
-
-            if (isHealed) {
-              addLog(`💊 Witch menyelamatkan ${target.playerName}!`, "info");
-              witchHealTargetId = null;
-            } else if (isProtected) {
-              addLog(`🛡️ Guardian melindungi ${target.playerName}!`, "info");
+          let target = semuaPemain.find((p) => p.id === targetWarriorMalam);
+          if (warrior && target && target.hidup) {
+            if (target.role === "Werewolf") {
+              addGameLog(`⚔️ Warrior menebas ${target.role}`, "death");
+              matikanPemain(target.id, "Warrior");
             } else {
-              killPlayerDirectly(werewolfTargetId, "Werewolf");
+              addGameLog(
+                `⚔️ Warrior menebas ${target.role} (bukan Werewolf) → Warrior ikut mati`,
+                "death"
+              );
+              matikanPemain(target.id, "Warrior");
+              matikanPemain(warrior.id, "Warrior Suicide");
             }
           }
-          werewolfTargetId = null;
-          werewolfTargetStatus.innerHTML = "";
+          targetWarriorMalam = null;
+          if (statusWarrior) statusWarrior.innerHTML = "";
         }
 
-        protectedTargetId = null;
-        protectionStatus.innerHTML = "";
-        witchHealTargetId = null;
-
-        addLog("🌙 ===== EKSEKUSI SELESAI ===== ", "night");
-        updateAllDisplays();
-        checkVictoryCondition();
-      }
-
-      function executeVoting() {
-        if (gameEnded) {
-          alert("Game selesai!");
-          return;
-        }
-        const targetId = parseInt(votingTargetSelect.value);
-        if (!targetId) {
-          alert("Pilih target!");
-          return;
-        }
-
-        const target = assignedPlayers.find((p) => p.id === targetId);
-        if (!target || !target.alive) {
-          alert("Target tidak valid!");
-          return;
-        }
-
-        addLog(`🗳️ Desa mengeliminasi ${target.playerName}!`, "death");
-
-        if (target.role === "The Fool") {
-          gameEnded = true;
-          victoryDisplay.style.display = "block";
-          victoryDisplay.innerHTML =
-            "🎭 THE FOOL MENANG! 🎭<br>Wabah menyebar ke seluruh desa!";
-          addLog("🏆 THE FOOL MENANG!", "info");
-          return;
-        }
-
-        if (target.role === "Lycan") {
-          const seer = assignedPlayers.find(
-            (p) => p.role === "Seer" && p.alive
-          );
-          if (seer) {
-            addLog(
-              `😈 Lycan ${target.playerName} dieliminasi! Seer ${seer.playerName} ikut mati!`,
-              "death"
-            );
-            seer.alive = false;
+        if (targetPoisonId) {
+          let target = semuaPemain.find((p) => p.id === targetPoisonId);
+          if (target && target.hidup) {
+            addGameLog(`🧪 Witch meracuni ${target.role}`, "death");
+            matikanPemain(target.id, "Poison");
           }
+          targetPoisonId = null;
+          statusWitch.innerHTML = "";
         }
 
-        killPlayerDirectly(targetId, "Voting");
-        votingTargetSelect.value = "";
-        updateAllDisplays();
-        checkVictoryCondition();
+        if (targetBunuh) {
+          let target = semuaPemain.find((p) => p.id === targetBunuh);
+          if (target && target.hidup) {
+            let dilindungi = targetLindung === targetBunuh;
+            let diHeal = targetHealId === targetBunuh;
+            if (diHeal) {
+              addGameLog(
+                `💊 Witch menyelamatkan ${target.role} dari serangan Werewolf`,
+                "info"
+              );
+              targetHealId = null;
+            } else if (dilindungi) {
+              addGameLog(
+                `🛡️ Guardian melindungi ${target.role} dari serangan Werewolf`,
+                "info"
+              );
+            } else {
+              addGameLog(`🐺 Werewolf membunuh ${target.role}`, "death");
+              matikanPemain(target.id, "Werewolf");
+            }
+          }
+          targetBunuh = null;
+          statusWerewolf.innerHTML = "";
+        }
+
+        targetLindung = null;
+        statusGuardian.innerHTML = "";
+        targetHealId = null;
+
+        updateUI();
+        pindahKeTabKorban();
       }
 
-      function warriorKill() {
-        if (gameEnded) {
-          alert("Game selesai!");
-          return;
-        }
-        const warrior = assignedPlayers.find(
-          (p) => p.role === "Warrior" && p.alive
-        );
-        if (!warrior) {
-          alert("Warrior mati!");
-          return;
-        }
-        if (warriorUsed) {
-          alert("Warrior sudah tebas!");
-          return;
-        }
-
-        const targetId = parseInt(warriorTargetSelect.value);
-        if (!targetId) {
+      function setWerewolfTarget() {
+        let tid = parseInt(targetWerewolf.value);
+        if (!tid) {
           alert("Pilih target!");
           return;
         }
-
-        const target = assignedPlayers.find((p) => p.id === targetId);
-        if (!target || !target.alive) {
-          alert("Target tidak valid!");
-          return;
-        }
-
-        warriorUsed = true;
-        addLog(
-          `⚔️ Warrior ${warrior.playerName} menebas ${target.playerName}!`,
-          "death"
-        );
-
-        if (target.role === "Werewolf") {
-          addLog(`✅ Target Werewolf! Warrior selamat!`, "info");
-          killPlayerDirectly(targetId, "Warrior");
-        } else {
-          addLog(`💀 Target bukan Werewolf! Warrior ikut mati!`, "death");
-          killPlayerDirectly(targetId, "Warrior");
-          killPlayerDirectly(warrior.id, "Warrior Suicide");
-        }
-        updateAllDisplays();
-        checkVictoryCondition();
+        targetBunuh = tid;
+        let t = semuaPemain.find((p) => p.id === tid);
+        statusWerewolf.innerHTML = `🐺 Werewolf akan mengeksekusi ${t.nama} malam ini`;
       }
 
-      function seerCheck() {
-        const seer = assignedPlayers.find((p) => p.role === "Seer" && p.alive);
+      function setGuardianTarget() {
+        let tid = parseInt(targetGuardian.value);
+        if (!tid) {
+          alert("Pilih target!");
+          return;
+        }
+        targetLindung = tid;
+        let t = semuaPemain.find((p) => p.id === tid);
+        statusGuardian.innerHTML = `🛡️ Guardian akan melindungi ${t.nama} malam ini`;
+      }
+
+      function setWarriorTarget() {
+        let tid = parseInt(targetWarrior.value);
+        if (!tid) {
+          alert("Pilih target!");
+          return;
+        }
+        targetWarriorMalam = tid;
+        let t = semuaPemain.find((p) => p.id === tid);
+        statusWarrior.innerHTML = `⚔️ Warrior akan menebas ${t.nama} malam ini!`;
+      }
+
+      function healAction() {
+        let witch = semuaPemain.find((p) => p.role === "Witch" && p.hidup);
+        if (!witch) {
+          alert("Witch mati!");
+          return;
+        }
+        if (healUsed) {
+          alert("Heal sudah terpakai!");
+          return;
+        }
+        let tid = parseInt(targetHeal.value);
+        if (!tid) {
+          alert("Pilih target!");
+          return;
+        }
+        targetHealId = tid;
+        healUsed = true;
+        let t = semuaPemain.find((p) => p.id === tid);
+        statusWitch.innerHTML = `💊 Witch akan menyelamatkan ${t.nama} jika menjadi target Werewolf`;
+        updateUI();
+      }
+
+      function poisonAction() {
+        let witch = semuaPemain.find((p) => p.role === "Witch" && p.hidup);
+        if (!witch) {
+          alert("Witch mati!");
+          return;
+        }
+        if (poisonUsed) {
+          alert("Poison sudah terpakai!");
+          return;
+        }
+        let tid = parseInt(targetPoison.value);
+        if (!tid) {
+          alert("Pilih target!");
+          return;
+        }
+        targetPoisonId = tid;
+        poisonUsed = true;
+        let t = semuaPemain.find((p) => p.id === tid);
+        statusWitch.innerHTML = `☠️ Witch akan meracuni ${t.nama} malam ini (tembus Guardian!)`;
+        updateUI();
+      }
+
+      function seerCek() {
+        let seer = semuaPemain.find((p) => p.role === "Seer" && p.hidup);
         if (!seer) {
           alert("Seer mati!");
           return;
         }
-        const targetId = parseInt(seerTargetSelect.value);
-        if (!targetId) {
+        let tid = parseInt(targetSeer.value);
+        if (!tid) {
           alert("Pilih target!");
           return;
         }
-        const target = assignedPlayers.find((p) => p.id === targetId);
-        const isWerewolf =
-          target.role === "Werewolf" || target.role === "Lycan";
-        seerResult.style.display = "block";
-        seerResult.innerHTML = `🔮 Seer mengecek ${
-          target.playerName
-        }: <strong>${
-          isWerewolf ? "🐺 WEREWOLF!" : "✅ BUKAN Werewolf"
+        let t = semuaPemain.find((p) => p.id === tid);
+        let isWw = t.role === "Werewolf" || t.role === "Lycan";
+        hasilSeer.style.display = "block";
+        hasilSeer.innerHTML = `🔮 Seer mengecek ${t.nama}: <strong>${
+          isWw ? "🐺 WEREWOLF!" : "✅ BUKAN Werewolf"
         }</strong>`;
-        addLog(
-          `🔮 Seer mengecek ${target.playerName} → ${
-            isWerewolf ? "Werewolf" : "Bukan Werewolf"
-          }`,
-          "info"
-        );
         setTimeout(() => {
-          seerResult.style.display = "none";
+          hasilSeer.style.display = "none";
         }, 5000);
       }
 
-      function sorcererCheck() {
-        const sorcerer = assignedPlayers.find(
-          (p) => p.role === "Sorcerer" && p.alive
-        );
-        if (!sorcerer) {
+      function sorcererCek() {
+        let sor = semuaPemain.find((p) => p.role === "Sorcerer" && p.hidup);
+        if (!sor) {
           alert("Sorcerer mati!");
           return;
         }
-        const targetId = parseInt(sorcererTargetSelect.value);
-        if (!targetId) {
+        let tid = parseInt(targetSorcerer.value);
+        if (!tid) {
           alert("Pilih target!");
           return;
         }
-        const target = assignedPlayers.find((p) => p.id === targetId);
-        const isSeer = target.role === "Seer";
-
-        sorcererResult.style.display = "block";
+        let t = semuaPemain.find((p) => p.id === tid);
+        let isSeer = t.role === "Seer";
+        hasilSorcerer.style.display = "block";
         if (isSeer) {
-          sorcererResult.innerHTML = `🧙 Sorcerer mengecek ${target.playerName}: <strong>🔮 INI SEER! SORCERER MENANG!</strong>`;
-          addLog(`🧙 Sorcerer menemukan Seer! MENANG!`, "info");
-          gameEnded = true;
-          victoryDisplay.style.display = "block";
-          victoryDisplay.innerHTML = "🧙 SORCERER MENANG! 🧙";
-        } else {
-          sorcererResult.innerHTML = `🧙 Sorcerer mengecek ${target.playerName}: <strong>❌ BUKAN Seer</strong>`;
-          addLog(
-            `🧙 Sorcerer mengecek ${target.playerName} → Bukan Seer`,
-            "info"
+          hasilSorcerer.innerHTML = `🧙 Sorcerer mengecek ${t.nama}: <strong>🔮 INI SEER! SORCERER MENANG!</strong>`;
+          showVictoryPage(
+            "SORCERER",
+            `Sorcerer berhasil menangkap Seer (${t.role}) dan mengambil kekuatannya untuk melenyapkan semua orang! 🧙`,
+            "🧙"
           );
+        } else {
+          hasilSorcerer.innerHTML = `🧙 Sorcerer mengecek ${t.nama}: <strong>❌ BUKAN Seer</strong>`;
         }
         setTimeout(() => {
-          sorcererResult.style.display = "none";
+          hasilSorcerer.style.display = "none";
         }, 5000);
       }
 
-      function hunterShoot() {
-        const hunter = assignedPlayers.find((p) => p.role === "Hunter");
-        if (!hunter) {
-          alert("Tidak ada Hunter!");
-          return;
-        }
-        if (hunter.alive) {
-          alert("Hunter masih hidup!");
-          return;
-        }
-        const targetId = parseInt(hunterTargetSelect.value);
-        if (!targetId) {
-          alert("Pilih target!");
-          return;
-        }
-        const target = assignedPlayers.find((p) => p.id === targetId);
-        if (!target || !target.alive) {
-          alert("Target tidak valid!");
-          return;
-        }
-        addLog(
-          `🔫 HUNTER ${hunter.playerName} menembak ${target.playerName}!`,
-          "death"
-        );
-        killPlayerDirectly(target.id, "Hunter Revenge");
-        updateAllDisplays();
-        checkVictoryCondition();
-      }
-
-      function setProtection() {
-        const targetId = parseInt(guardianSelect.value);
-        if (!targetId) {
-          alert("Pilih target!");
-          return;
-        }
-        protectedTargetId = targetId;
-        const target = assignedPlayers.find((p) => p.id === targetId);
-        protectionStatus.innerHTML = `🛡️ Guardian melindungi ${target.playerName}`;
-        addLog(`🛡️ Guardian melindungi ${target.playerName}`, "info");
-      }
-
-      function setWerewolfTarget() {
-        const targetId = parseInt(werewolfSelect.value);
-        if (!targetId) {
-          alert("Pilih target!");
-          return;
-        }
-        werewolfTargetId = targetId;
-        const target = assignedPlayers.find((p) => p.id === targetId);
-        werewolfTargetStatus.innerHTML = `🐺 Werewolf membunuh ${target.playerName}`;
-        addLog(`🐺 Werewolf menargetkan ${target.playerName}`, "night");
-      }
-
-      function witchHealAction() {
-        if (gameEnded) {
-          alert("Game selesai!");
-          return;
-        }
-        const witch = assignedPlayers.find(
-          (p) => p.role === "Witch" && p.alive
-        );
-        if (!witch) {
-          alert("Witch mati!");
-          return;
-        }
-        if (witchHealUsed) {
-          alert("Heal sudah terpakai!");
-          return;
-        }
-        const targetId = parseInt(witchHealSelect.value);
-        if (!targetId) {
-          alert("Pilih target!");
-          return;
-        }
-        witchHealTargetId = targetId;
-        witchHealUsed = true;
-        const target = assignedPlayers.find((p) => p.id === targetId);
-        witchActionStatus.innerHTML = `💊 Witch akan menyelamatkan ${target.playerName}`;
-        addLog(`🧪 Witch menyiapkan heal untuk ${target.playerName}`, "info");
-        updateAllDropdowns();
-      }
-
-      function witchPoisonAction() {
-        if (gameEnded) {
-          alert("Game selesai!");
-          return;
-        }
-        const witch = assignedPlayers.find(
-          (p) => p.role === "Witch" && p.alive
-        );
-        if (!witch) {
-          alert("Witch mati!");
-          return;
-        }
-        if (witchPoisonUsed) {
-          alert("Poison sudah terpakai!");
-          return;
-        }
-        const targetId = parseInt(witchPoisonSelect.value);
-        if (!targetId) {
-          alert("Pilih target!");
-          return;
-        }
-        witchPoisonTargetId = targetId;
-        witchPoisonUsed = true;
-        const target = assignedPlayers.find((p) => p.id === targetId);
-        witchActionStatus.innerHTML = `☠️ Witch meracuni ${target.playerName}`;
-        addLog(`🧪 Witch menyiapkan poison untuk ${target.playerName}`, "info");
-        updateAllDropdowns();
-      }
-
-      function resetAllDeath() {
-        assignedPlayers.forEach((p) => {
-          p.alive = true;
-          p.wounded = false;
+      function resetSemuaMati() {
+        semuaPemain.forEach((p) => {
+          p.hidup = true;
+          p.terluka = false;
         });
-        protectedTargetId = null;
-        werewolfTargetId = null;
-        witchHealTargetId = null;
-        witchPoisonTargetId = null;
-        gameEnded = false;
-        victoryDisplay.style.display = "none";
-        updateAllDisplays();
-        addLog("♻️ Reset semua kematian", "info");
-        checkVictoryCondition();
-      }
-
-      function startGame() {
-        let jumlah = parseInt(jumlahInput.value);
-        jumlah = Math.min(20, Math.max(5, jumlah));
-        jumlahInput.value = jumlah;
-
-        requiredRoles = generateBalancedRoles(jumlah);
-        assignedPlayers = [];
-        nextId = 1;
-        cupidPlayerId = null;
-        loversTargetId = null;
-        loversSet = false;
-        gameEnded = false;
-        gameActive = true;
-
-        const roleCounts = {};
-        requiredRoles.forEach((role) => {
-          roleCounts[role] = (roleCounts[role] || 0) + 1;
-        });
-
-        roleListContent.innerHTML = Object.entries(roleCounts)
-          .map(
-            ([role, count]) => `<span class="role-tag">${role} x${count}</span>`
-          )
-          .join("");
-        roleDescriptions.innerHTML =
-          "<h4>📖 Deskripsi Peran:</h4>" +
-          Object.entries(roleCounts)
-            .map(([role, count]) => {
-              const info = ROLE_DATABASE[role];
-              return info
-                ? `<div class="role-card-compact"><div class="role-name-large">${role} x${count} - ${info.team}</div><div class="role-desc">${info.desc}</div><div class="role-desc" style="color:#ffcd7e;">⚡ ${info.ability}</div></div>`
-                : `<div class="role-card-compact">${role} x${count}</div>`;
-            })
-            .join("");
-
-        roleListDisplay.style.display = "block";
-        rouletteContainer.style.display = "none";
-
-        addLog(
-          `🎮 Game dengan ${jumlah} pemain. Werewolf: ${
-            requiredRoles.filter((r) => r === "Werewolf").length
-          } ekor.`,
-          "info"
-        );
-      }
-
-      function startRoulette() {
-        assignedPlayers = [];
-        nextId = 1;
-        currentSpinRole = null;
-        protectedTargetId = null;
-        werewolfTargetId = null;
-        witchHealTargetId = null;
-        witchPoisonTargetId = null;
-        witchHealUsed = false;
-        witchPoisonUsed = false;
-        warriorUsed = false;
-        cupidPlayerId = null;
-        loversTargetId = null;
-        loversSet = false;
-        gameEnded = false;
-        gameActive = true;
+        daftarKematian = [];
         gameLogs = [];
-        victoryDisplay.style.display = "none";
-        cupidSection.style.display = "none";
-
-        roleListDisplay.style.display = "none";
-        rouletteContainer.style.display = "block";
-        btnSpin.disabled = false;
-        rouletteCard.innerHTML = `<div class="role-big">🎴</div><div>Klik spin untuk mengambil role</div>`;
-        rouletteProgress.innerHTML = `🎮 Total ${requiredRoles.length} role.`;
-        updateAllDisplays();
+        targetLindung = null;
+        targetBunuh = null;
+        targetWarriorMalam = null;
+        targetHealId = null;
+        targetPoisonId = null;
+        updateUI();
+        updateLogTabStatus();
+        logListDiv.innerHTML = "<div>Belum ada log</div>";
       }
 
       function fullReset() {
-        gameActive = false;
-        gameEnded = false;
-        requiredRoles = [];
-        assignedPlayers = [];
-        nextId = 1;
-        roleListDisplay.style.display = "none";
-        rouletteContainer.style.display = "none";
-        cupidSection.style.display = "none";
-        tabNaratorBtn.style.display = "none";
-        tabNightBtn.style.display = "none";
-        tabVotingBtn.style.display = "none";
-        tabDeadBtn.style.display = "none";
-        tabBlindBtn.style.display = "none";
-        victoryDisplay.style.display = "none";
-        addLog("🔄 Game direset.", "info");
-      }
-
-      function clearLog() {
+        gameDimulai = false;
+        rolesTersedia = [];
+        semuaPemain = [];
+        daftarKematian = [];
         gameLogs = [];
-        renderLogs();
+        nextId = 1;
+        btnNarator.style.display = "none";
+        btnNight.style.display = "none";
+        btnDead.style.display = "none";
+        btnVotingTab.style.display = "none";
+        roleListPanel.style.display = "none";
+        roulettePanel.style.display = "none";
+        cupidArea.style.display = "none";
+        updateUI();
+        updateLogTabStatus();
+        logListDiv.innerHTML = "<div>Belum ada log</div>";
       }
 
-      // Sub tab navigation
-      document.querySelectorAll(".sub-tab-btn").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          document
-            .querySelectorAll(".sub-tab-btn")
-            .forEach((b) => b.classList.remove("active"));
-          document
-            .querySelectorAll(".sub-tab-content")
-            .forEach((c) => c.classList.remove("active"));
-          btn.classList.add("active");
-          document
-            .getElementById(`subtab-${btn.dataset.subtab}`)
-            .classList.add("active");
-        });
-      });
+      function executeVoting() {
+        if (!gameDimulai) {
+          alert("Game belum dimulai!");
+          return;
+        }
 
-      // Event Listeners
-      btnStart.addEventListener("click", startGame);
-      btnStartRoulette.addEventListener("click", startRoulette);
-      btnResetFull.addEventListener("click", fullReset);
-      btnSpin.addEventListener("click", spinRoulette);
-      btnConfirm.addEventListener("click", confirmRole);
-      btnSetLovers.addEventListener("click", setLovers);
-      btnSetProtection.addEventListener("click", setProtection);
-      btnSetWerewolfTarget.addEventListener("click", setWerewolfTarget);
-      btnExecuteNight.addEventListener("click", executeNight);
-      btnResetDeath.addEventListener("click", resetAllDeath);
-      btnWitchHeal.addEventListener("click", witchHealAction);
-      btnWitchPoison.addEventListener("click", witchPoisonAction);
-      btnSeerCheck.addEventListener("click", seerCheck);
-      btnSorcererCheck.addEventListener("click", sorcererCheck);
-      btnHunterShoot.addEventListener("click", hunterShoot);
-      btnWarriorKill.addEventListener("click", warriorKill);
-      btnExecuteVoting.addEventListener("click", executeVoting);
-      btnClearLog.addEventListener("click", clearLog);
-      playerNameInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") confirmRole();
-      });
+        let targetId = parseInt(targetVoting.value);
+        if (!targetId) {
+          alert("Pilih target yang akan dieliminasi!");
+          return;
+        }
 
-      document.querySelectorAll(".tab-btn").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          document
-            .querySelectorAll(".tab-btn")
-            .forEach((b) => b.classList.remove("active"));
-          document
-            .querySelectorAll(".tab-content")
-            .forEach((t) => t.classList.remove("active"));
-          btn.classList.add("active");
-          document
-            .getElementById(`tab-${btn.dataset.tab}`)
-            .classList.add("active");
+        let target = semuaPemain.find((p) => p.id === targetId);
+        if (!target || !target.hidup) {
+          alert("Target tidak valid atau sudah mati!");
+          return;
+        }
+
+        votingStatus.innerHTML = `✅ Desa telah mengeliminasi ${target.nama}`;
+        setTimeout(() => {
+          votingStatus.innerHTML = "";
+        }, 3000);
+
+        if (target.role === "The Fool") {
+          showVictoryPage(
+            "THE FOOL",
+            "The Fool berhasil dieliminasi! Wabah menyebar ke seluruh desa!",
+            "🎭"
+          );
+          return;
+        }
+
+        if (target.role === "Lycan") {
+          let seer = semuaPemain.find((p) => p.role === "Seer" && p.hidup);
+          if (seer) {
+            addGameLog(
+              `😈 Lycan ${target.role} dieliminasi! Seer ${seer.role} ikut mati karena berita palsu`,
+              "death"
+            );
+            matikanPemain(seer.id, "Lycan Curse");
+          }
+        }
+
+        addGameLog(`🗳️ ${target.role} dieliminasi oleh voting desa`, "death");
+        matikanPemain(target.id, "Voting");
+        updateUI();
+
+        document
+          .querySelectorAll("#mainTabs .tab-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+        document
+          .querySelectorAll(".tab-panel")
+          .forEach((panel) => panel.classList.remove("active"));
+        btnDead.classList.add("active");
+        document.getElementById("panel-dead").classList.add("active");
+      }
+
+      function initTabs() {
+        const mainBtns = document.querySelectorAll("#mainTabs .tab-btn");
+        const panels = document.querySelectorAll(".tab-panel");
+        mainBtns.forEach((btn) => {
+          btn.onclick = () => {
+            const tabId = btn.getAttribute("data-tab");
+            mainBtns.forEach((b) => b.classList.remove("active"));
+            panels.forEach((p) => p.classList.remove("active"));
+            btn.classList.add("active");
+            document.getElementById(`panel-${tabId}`).classList.add("active");
+          };
         });
-      });
+
+        const subBtns = document.querySelectorAll("#subNav .sub-btn");
+        const subPanels = document.querySelectorAll("#panel-night .sub-panel");
+        subBtns.forEach((btn) => {
+          btn.onclick = () => {
+            const subId = btn.getAttribute("data-sub");
+            subBtns.forEach((b) => b.classList.remove("active"));
+            subPanels.forEach((p) => p.classList.remove("active"));
+            btn.classList.add("active");
+            document.getElementById(`sub-${subId}`).classList.add("active");
+          };
+        });
+      }
+
+      // Event Binding
+      btnGenerate.onclick = generateRole;
+      btnReset.onclick = fullReset;
+      btnMulaiRoulette.onclick = mulaiRoulette;
+      btnSpin.onclick = spinRoulette;
+      btnKonfirmasi.onclick = konfirmasiRole;
+      btnCupidSet.onclick = setCupid;
+      btnSetWerewolf.onclick = setWerewolfTarget;
+      btnSetGuardian.onclick = setGuardianTarget;
+      btnWarriorTebas.onclick = setWarriorTarget;
+      btnHeal.onclick = healAction;
+      btnPoison.onclick = poisonAction;
+      btnSeerCek.onclick = seerCek;
+      btnSorcererCek.onclick = sorcererCek;
+      btnEksekusiMalam.onclick = eksekusiMalam;
+      btnResetMati.onclick = resetSemuaMati;
+      btnClearLog.onclick = () => {
+        gameLogs = [];
+        logListDiv.innerHTML = "<div>Log dibersihkan</div>";
+      };
+      namaPemainInput.onkeypress = (e) => {
+        if (e.key === "Enter") konfirmasiRole();
+      };
+      btnVotingExecute.onclick = executeVoting;
+
+      initTabs();
+      logListDiv.innerHTML = "<div>Belum ada log</div>";
     </script>
   </body>
 </html>
