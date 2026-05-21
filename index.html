@@ -369,6 +369,14 @@
           >
             🧙 Sorcerer
           </div>
+          <div
+            class="sub-btn"
+            data-sub="lycan"
+            id="subLycan"
+            style="display: none"
+          >
+            🐺 Lycan (Penanda)
+          </div>
           <div class="sub-btn" data-sub="execute">⚡ Eksekusi</div>
         </div>
 
@@ -443,6 +451,24 @@
             "
           ></div>
         </div>
+        <div id="sub-lycan" class="sub-panel">
+          <div class="action-group">
+            <h4>🐺 Lycan - Kemampuan Menandai</h4>
+            <div id="lycanInfo" class="info-box"></div>
+            <div id="lycanMarkArea" style="display: none">
+              <select id="targetLycan">
+                <option value="">-- Pilih Target untuk Ditandai --</option>
+              </select>
+              <button id="btnLycanMark" class="danger">🔖 Tandai Pemain</button>
+            </div>
+            <div id="lycanStatus" class="action-status"></div>
+            <div
+              id="markedPlayerInfo"
+              class="info-box"
+              style="margin-top: 10px; background: #2d1a4f"
+            ></div>
+          </div>
+        </div>
         <div id="sub-execute" class="sub-panel">
           <button
             id="btnEksekusiMalam"
@@ -499,6 +525,9 @@
       let targetPoisonId = null;
       let healUsed = false;
       let poisonUsed = false;
+      let lycanId = null;
+      let markedPlayerId = null;
+      let canMark = true;
       let gameDimulai = false;
       let daftarKematian = [];
       let gameLogs = []; // Log khusus untuk kejadian malam & voting
@@ -691,7 +720,166 @@
 
         updateDeadList();
         updateLogTabStatus();
+        updateLycanUI();
+        updateVotingTargetList();
       }
+
+      // ========== FUNGSI LYCAN BARU ==========
+
+      // Update tampilan kemampuan Lycan
+      function updateLycanUI() {
+        const lycanPlayer = semuaPemain.find((p) => p.role === "Lycan");
+        const lycanInfoDiv = document.getElementById("lycanInfo");
+        const lycanMarkArea = document.getElementById("lycanMarkArea");
+        const markedPlayerInfoDiv = document.getElementById("markedPlayerInfo");
+        const targetLycanSelect = document.getElementById("targetLycan");
+        const subLycan = document.getElementById("subLycan");
+
+        if (!lycanPlayer) {
+          if (subLycan) subLycan.style.display = "none";
+          return;
+        }
+
+        subLycan.style.display = "inline-block";
+
+        if (!lycanPlayer.hidup) {
+          lycanInfoDiv.innerHTML =
+            "💀 Lycan telah mati, tidak bisa menandai lagi";
+          lycanMarkArea.style.display = "none";
+          markedPlayerInfoDiv.innerHTML = "";
+          return;
+        }
+
+        lycanInfoDiv.innerHTML = `🐺 Lycan: ${lycanPlayer.nama} | ${
+          canMark ? "✅ Dapat menandai" : "⏳ Menunggu target mati"
+        }`;
+
+        // Update marked player info
+        if (markedPlayerId) {
+          let marked = semuaPemain.find((p) => p.id === markedPlayerId);
+          if (marked) {
+            markedPlayerInfoDiv.innerHTML = `🔖 Pemain yang ditandai: <strong>${
+              marked.nama
+            } </strong><br>Status: ${marked.hidup ? "✅ Hidup" : "💀 Mati"}`;
+            if (!marked.hidup && !canMark) {
+              canMark = true;
+              markedPlayerId = null;
+              addGameLog(
+                `🔖 Lycan dapat menandai pemain baru karena target sebelumnya (${marked.role}) telah mati`,
+                "info"
+              );
+              updateLycanUI();
+            }
+          } else {
+            markedPlayerId = null;
+            canMark = true;
+            markedPlayerInfoDiv.innerHTML = "";
+            updateLycanUI();
+          }
+        } else {
+          markedPlayerInfoDiv.innerHTML = canMark
+            ? "🔖 Belum ada pemain yang ditandai"
+            : "";
+        }
+
+        // Update dropdown target
+        if (canMark && lycanPlayer.hidup) {
+          lycanMarkArea.style.display = "block";
+          let alivePlayers = semuaPemain.filter(
+            (p) => p.id !== lycanPlayer.id && p.hidup
+          );
+          targetLycanSelect.innerHTML =
+            '<option value="">-- Pilih Target --</option>' +
+            alivePlayers
+              .map((p) => `<option value="${p.id}">${p.nama}</option>`)
+              .join("");
+        } else {
+          lycanMarkArea.style.display = "none";
+        }
+      }
+
+      // Fungsi untuk menandai pemain
+      function markPlayer() {
+        const lycan = semuaPemain.find((p) => p.role === "Lycan");
+        if (!lycan || !lycan.hidup) {
+          alert("Lycan sudah mati!");
+          return;
+        }
+        if (!canMark) {
+          alert(
+            "Lycan masih memiliki target yang ditandai! Tunggu sampai target mati."
+          );
+          return;
+        }
+
+        const targetId = parseInt(document.getElementById("targetLycan").value);
+        if (!targetId) {
+          alert("Pilih target yang akan ditandai!");
+          return;
+        }
+
+        const target = semuaPemain.find((p) => p.id === targetId);
+        if (!target || !target.hidup) {
+          alert("Target tidak valid!");
+          return;
+        }
+
+        markedPlayerId = targetId;
+        canMark = false;
+
+        addGameLog(`🔖 Lycan menandai ${target.role}`, "info");
+
+        // Cek apakah target adalah Sorcerer, The Fool, Cursed Villager, atau Werewolf
+        const specialRoles = [
+          "Sorcerer",
+          "The Fool",
+          "Cursed Villager",
+          "Werewolf",
+        ];
+        if (specialRoles.includes(target.role)) {
+          addGameLog(
+            `📢 ${target.role} telah ditandai Lycan! Namanya akan muncul di tab Voting!`,
+            "warning"
+          );
+        }
+
+        updateVotingTargetList();
+        updateLycanUI();
+        updateUI();
+        updateVotingTargetList();
+      }
+
+      // Update dropdown voting dengan menampilkan nama pemain yang ditandai (jika special role)
+      function updateVotingTargetList() {
+        const votingSelect = document.getElementById("targetVoting");
+        if (!votingSelect) return;
+
+        let alivePlayers = semuaPemain.filter((p) => p.hidup);
+        let options = '<option value="">-- Pilih Target --</option>';
+
+        alivePlayers.forEach((p) => {
+          let displayName = p.nama;
+          // Jika pemain ini adalah target Lycan dan role-nya special, tampilkan nama di voting tab
+          if (markedPlayerId === p.id) {
+            const specialRoles = [
+              "Sorcerer",
+              "The Fool",
+              "Cursed Villager",
+              "Werewolf",
+            ];
+            if (specialRoles.includes(p.role)) {
+              displayName = `${p.nama} ⚠️ Marked ⚠️`;
+            }
+          }
+          options += `<option value="${p.id}">${displayName}</option>`;
+        });
+
+        votingSelect.innerHTML = options;
+      }
+
+      // Override fungsi matikanPemain untuk mendeteksi kematian target Lycan
+      // Cari fungsi matikanPemain yang sudah ada, dan tambahkan kode ini di dalamnya
+      // TAPI karena kita tidak mau mengedit kode lain, kita akan patch setelah matikanPemain dipanggil
 
       function updateDeadList() {
         if (daftarKematian.length === 0) {
@@ -865,6 +1053,31 @@
         return true;
       }
 
+      // Simpan referensi fungsi matikanPemain yang asli
+      const originalMatikanPemain = matikanPemain;
+
+      // Override fungsi matikanPemain untuk menambahkan pengecekan Lycan
+      window.matikanPemain = function (id, sumber) {
+        const result = originalMatikanPemain(id, sumber);
+
+        // Cek apakah target yang mati adalah target Lycan
+        if (markedPlayerId === id) {
+          canMark = true;
+          markedPlayerId = null;
+          addGameLog(
+            `🔖 Target Lycan telah mati. Lycan dapat menandai pemain baru.`,
+            "info"
+          );
+          updateLycanUI();
+        }
+
+        updateVotingTargetList();
+        return result;
+      };
+
+      // Ganti matikanPemain dengan versi yang sudah di-patch
+      matikanPemain = window.matikanPemain;
+
       function cekPemenang() {
         let hidup = semuaPemain.filter((p) => p.hidup);
         let ww = semuaPemain.filter((p) => p.role === "Werewolf" && p.hidup);
@@ -984,6 +1197,9 @@
         targetHealId = null;
         targetPoisonId = null;
         healUsed = false;
+        let lycanId = null;
+        let markedPlayerId = null;
+        let canMark = true;
         poisonUsed = false;
         gameDimulai = false;
         roleListPanel.style.display = "none";
@@ -1195,8 +1411,8 @@
         statusGuardian.innerHTML = "";
         targetHealId = null;
 
-        updateUI();
         pindahKeTabKorban();
+        updateUI();
       }
 
       function setWerewolfTarget() {
@@ -1418,6 +1634,7 @@
           .forEach((panel) => panel.classList.remove("active"));
         btnDead.classList.add("active");
         document.getElementById("panel-dead").classList.add("active");
+        updateVotingTargetList();
       }
 
       function initTabs() {
@@ -1460,6 +1677,7 @@
       btnPoison.onclick = poisonAction;
       btnSeerCek.onclick = seerCek;
       btnSorcererCek.onclick = sorcererCek;
+
       btnEksekusiMalam.onclick = eksekusiMalam;
       btnResetMati.onclick = resetSemuaMati;
       btnClearLog.onclick = () => {
@@ -1470,7 +1688,11 @@
         if (e.key === "Enter") konfirmasiRole();
       };
       btnVotingExecute.onclick = executeVoting;
-
+      // Lycan event binding
+      const btnLycanMark = document.getElementById("btnLycanMark");
+      if (btnLycanMark) {
+        btnLycanMark.onclick = markPlayer;
+      }
       initTabs();
       logListDiv.innerHTML = "<div>Belum ada log</div>";
     </script>
