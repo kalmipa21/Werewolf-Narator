@@ -1081,16 +1081,16 @@
       function cekPemenang() {
         let hidup = semuaPemain.filter((p) => p.hidup);
         let ww = semuaPemain.filter((p) => p.role === "Werewolf" && p.hidup);
-        let fool = semuaPemain.find((p) => p.role === "The Fool" && !p.hidup);
+        // let fool = semuaPemain.find((p) => p.role === "The Fool" && !p.hidup);
 
-        if (fool) {
-          showVictoryPage(
-            "THE FOOL",
-            "The Fool berhasil dieliminasi! Wabah menyebar dan membunuh semua penduduk desa!",
-            "🎭"
-          );
-          return true;
-        }
+        // if (fool) {
+        //   showVictoryPage(
+        //     "THE FOOL",
+        //     "The Fool berhasil dieliminasi! Wabah menyebar dan membunuh semua penduduk desa!",
+        //     "🎭"
+        //   );
+        //   return true;
+        // }
 
         if (hidup.length === 2) {
           let lovers = hidup.filter((p) => p.pasangan);
