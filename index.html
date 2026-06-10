@@ -1130,7 +1130,7 @@
       function generateRole() {
         let jumlah = parseInt(jumlahInput.value);
         jumlah = Math.min(20, Math.max(5, jumlah));
-        let wc = Math.max(2, Math.floor(jumlah / 5));
+        let wc = Math.max(2, Math.floor(jumlah / 3));
         let roles = [];
         for (let i = 0; i < wc; i++) roles.push("Werewolf");
         let unik = [
@@ -1152,20 +1152,20 @@
           let j = Math.floor(Math.random() * (i + 1));
           [acak[i], acak[j]] = [acak[j], acak[i]];
         }
-        let hasSeer = false,
-          hasSorcerer = false,
-          hasLycan = false;
+        // let hasSeer = false,
+        //   hasSorcerer = false,
+        //   hasLycan = false;
         let sisa = jumlah - wc;
         let uc = Math.min(sisa, acak.length);
         for (let i = 0; i < uc; i++) {
           let r = acak[i];
           roles.push(r);
-          if (r === "Seer") hasSeer = true;
-          if (r === "Sorcerer") hasSorcerer = true;
-          if (r === "Lycan") hasLycan = true;
+          // if (r === "Seer") hasSeer = true;
+          // if (r === "Sorcerer") hasSorcerer = true;
+          // if (r === "Lycan") hasLycan = true;
         }
-        if (hasSorcerer && !hasSeer) roles.push("Seer");
-        if (hasLycan && !hasSeer) roles.push("Seer");
+        // if (hasSorcerer && !hasSeer) roles.push("Seer");
+        // if (hasLycan && !hasSeer) roles.push("Seer");
         while (roles.length < jumlah) roles.push("Villager");
         for (let i = roles.length - 1; i > 0; i--) {
           let j = Math.floor(Math.random() * (i + 1));
